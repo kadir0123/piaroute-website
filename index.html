@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1110">
+  <meta name="description" content="Piri Rota, yol tehlikelerini sürücüler için daha görünür hâle getiren bir mobilite projesi. Uygulama ve yapay zekâ geliştirme sürecini keşfedin.">
+  <meta property="og:title" content="Piaroute — Piri Rota">
+  <meta property="og:description" content="Yol verisini anlamlandıran yeni bir mobilite yaklaşımı.">
+  <meta property="og:type" content="website">
+  <title>Piaroute — Piri Rota ile yolun farkında ol</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1110;
+      --surface: #111a18;
+      --surface-2: #16211e;
+      --line: rgba(230, 244, 237, .11);
+      --text: #f1f6f2;
+      --muted: #a1b0a8;
+      --green: #c9f36a;
+      --green-2: #9bd647;
+      --cyan: #7ee1d1;
+      --orange: #ffb66e;
+      --content: 1160px;
+      --radius: 24px;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 75% 4%, rgba(87, 155, 113, .14), transparent 34rem),
+        radial-gradient(ellipse at 4% 42%, rgba(47, 107, 98, .12), transparent 34rem),
+        var(--bg);
+      color: var(--text);
+      font: 16px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; border-radius: 5px; }
+    .skip-link { position: absolute; left: -9999px; top: 8px; z-index: 20; background: var(--green); color: #101610; padding: 10px 14px; border-radius: 8px; }
+    .skip-link:focus { left: 12px; }
+    .container { width: min(var(--content), calc(100% - 48px)); margin-inline: auto; }
+    .nav-wrap { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid var(--line); background: rgba(11, 17, 16, .84); backdrop-filter: blur(16px); }
+    nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 750; letter-spacing: -.04em; }
+    .brand-mark { width: 38px; height: 38px; border-radius: 13px; display: grid; place-items: center; color: #11180e; background: var(--green); box-shadow: 0 0 34px rgba(201,243,106,.16); font-size: 19px; font-weight: 900; }
+    .brand-name { font-size: 19px; line-height: 1.1; }
+    .brand-sub { display: block; color: var(--muted); font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin-top: 4px; }
+    .nav-links { display: flex; align-items: center; gap: 30px; color: var(--muted); font-size: 13px; }
+    .nav-links a:hover, .footer-links a:hover { color: var(--green); }
+    .button { display: inline-flex; justify-content: center; align-items: center; gap: 10px; padding: 13px 18px; border: 1px solid transparent; border-radius: 12px; font-size: 13px; font-weight: 700; transition: transform .2s ease, background .2s ease, border-color .2s ease; }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { color: #11180e; background: var(--green); }
+    .button-primary:hover { background: #d8fa88; }
+    .button-quiet { color: var(--text); border-color: var(--line); background: rgba(255,255,255,.025); }
+    .button-quiet:hover { border-color: rgba(201,243,106,.48); background: rgba(201,243,106,.06); }
+    .hero { padding: 88px 0 94px; }
+    .hero-grid { display: grid; grid-template-columns: 1.08fr .92fr; align-items: center; gap: 56px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--green); font-size: 11px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+    .eyebrow-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; box-shadow: 0 0 14px rgba(201,243,106,.75); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 670px; margin: 22px 0 22px; font-size: clamp(44px, 6.4vw, 76px); line-height: 1.02; letter-spacing: -.065em; font-weight: 720; }
+    h1 em { color: var(--green); font-style: normal; }
+    .hero-copy { max-width: 590px; color: #bac6bf; font-size: 17px; line-height: 1.8; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .status-note { display: flex; align-items: flex-start; gap: 11px; margin-top: 28px; color: var(--muted); font-size: 12px; }
+    .status-note strong { color: var(--text); font-weight: 650; }
+    .status-icon { flex: 0 0 auto; width: 19px; height: 19px; display: grid; place-items: center; border: 1px solid rgba(201,243,106,.32); border-radius: 50%; color: var(--green); font-size: 11px; }
+    .visual { position: relative; min-height: 440px; display: grid; place-items: center; }
+    .visual-glow { position: absolute; inset: 9% 1% 6%; background: radial-gradient(ellipse, rgba(113, 200, 155, .15), transparent 68%); filter: blur(12px); }
+    .map-card { position: relative; width: min(100%, 455px); min-height: 384px; overflow: hidden; border: 1px solid rgba(221,241,229,.16); border-radius: 26px; background: linear-gradient(150deg, rgba(29,44,39,.97), rgba(15,23,21,.98)); box-shadow: 0 28px 90px rgba(0,0,0,.42), inset 0 1px rgba(255,255,255,.035); transform: rotate(1.4deg); }
+    .map-top { height: 62px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid var(--line); }
+    .map-top-title { font-size: 12px; font-weight: 700; }
+    .map-top-sub { margin-top: 2px; color: var(--muted); font-size: 10px; }
+    .map-live { display: inline-flex; align-items: center; gap: 7px; color: var(--green); font-size: 10px; font-weight: 700; }
+    .map-live i { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+    .map-canvas { position: relative; height: 245px; overflow: hidden; background-color: #121e1b; background-image: linear-gradient(30deg, transparent 48%, rgba(163,190,171,.07) 49%, rgba(163,190,171,.07) 50%, transparent 51%), linear-gradient(150deg, transparent 45%, rgba(163,190,171,.055) 46%, rgba(163,190,171,.055) 47%, transparent 48%), linear-gradient(rgba(172,200,181,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(172,200,181,.04) 1px, transparent 1px); background-size: 190px 150px, 210px 180px, 42px 42px, 42px 42px; }
+    .road { position: absolute; width: 130%; height: 75px; left: -12%; top: 41%; border: 1px solid rgba(206,223,212,.13); border-radius: 50%; transform: rotate(-19deg); }
+    .road::before { content: ""; position: absolute; inset: 17px -3px; border-top: 2px dashed rgba(205,230,161,.5); transform: rotate(-1deg); }
+    .road::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(90deg, transparent 10%, rgba(201,243,106,.10) 45%, transparent 85%); }
+    .route-line { position: absolute; width: 235px; height: 128px; left: 24%; top: 23%; border: 2px solid transparent; border-left-color: var(--green); border-bottom-color: var(--green); border-radius: 0 0 0 70%; transform: rotate(-21deg); filter: drop-shadow(0 0 7px rgba(201,243,106,.32)); }
+    .map-pin { position: absolute; z-index: 2; width: 27px; height: 27px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.5); border-radius: 50% 50% 50% 6px; color: #17140f; background: var(--orange); font-size: 11px; font-weight: 900; transform: rotate(-45deg); box-shadow: 0 5px 16px rgba(0,0,0,.35); }
+    .map-pin span { transform: rotate(45deg); }
+    .pin-one { left: 40%; top: 45%; }
+    .pin-two { right: 17%; top: 25%; color: #10211f; background: var(--cyan); }
+    .you-dot { position: absolute; left: 19%; bottom: 18%; width: 14px; height: 14px; border: 3px solid #e9fff9; border-radius: 50%; background: #59b8aa; box-shadow: 0 0 0 7px rgba(126,225,209,.12), 0 0 18px rgba(126,225,209,.7); }
+    .map-label { position: absolute; color: rgba(213,228,218,.48); font-size: 9px; letter-spacing: .04em; }
+    .label-a { top: 15%; left: 12%; }.label-b { bottom: 15%; right: 10%; }.label-c { top: 70%; left: 56%; }
+    .map-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 76px; padding: 14px 18px; }
+    .report-mini { display: flex; align-items: center; gap: 11px; }
+    .report-icon { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 11px; color: var(--orange); background: rgba(255,182,110,.11); font-size: 17px; }
+    .report-title { font-size: 11px; font-weight: 700; }.report-sub { color: var(--muted); font-size: 9px; margin-top: 2px; }
+    .confidence { text-align: right; }.confidence b { display: block; color: var(--green); font-size: 13px; }.confidence span { color: var(--muted); font-size: 9px; }
+    .mock-caption { position: absolute; bottom: 0; right: 3px; color: #829188; font-size: 10px; }
+    .section { padding: 100px 0; border-top: 1px solid var(--line); }
+    .section-head { max-width: 670px; margin-bottom: 48px; }
+    .kicker { color: var(--green); font-size: 10px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 14px; }
+    h2 { margin-bottom: 14px; font-size: clamp(32px, 4.2vw, 48px); letter-spacing: -.052em; line-height: 1.08; font-weight: 690; }
+    .section-intro { color: var(--muted); font-size: 15px; line-height: 1.8; }
+    .signal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .signal { position: relative; min-height: 218px; padding: 27px; border: 1px solid var(--line); border-radius: 19px; background: linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.012)); }
+    .signal-number { color: rgba(201,243,106,.63); font-size: 11px; font-weight: 750; letter-spacing: .12em; }
+    .signal h3 { margin: 27px 0 9px; font-size: 18px; letter-spacing: -.025em; }
+    .signal p { max-width: 290px; margin-bottom: 0; color: var(--muted); font-size: 13px; line-height: 1.75; }
+    .signal-tag { display: inline-flex; margin-top: 17px; padding: 5px 9px; border: 1px solid rgba(201,243,106,.2); border-radius: 99px; color: var(--green); font-size: 10px; font-weight: 700; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .step { min-height: 245px; padding: 30px; background: rgba(255,255,255,.018); }
+    .step + .step { border-left: 1px solid var(--line); }
+    .step-index { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 13px; color: var(--green); background: rgba(201,243,106,.09); font-size: 12px; font-weight: 800; }
+    .step h3 { margin: 25px 0 9px; font-size: 17px; }
+    .step p { color: var(--muted); font-size: 13px; line-height: 1.8; margin: 0; }
+    .status-section { background: linear-gradient(90deg, rgba(201,243,106,.035), transparent 65%); }
+    .status-panel { display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: start; }
+    .status-list { border-top: 1px solid var(--line); }
+    .status-row { display: grid; grid-template-columns: 150px 1fr; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+    .status-row dt { color: var(--green); font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+    .status-row dd { margin: 0; color: #c1ccc5; font-size: 13px; line-height: 1.7; }
+    .contact-band { display: flex; align-items: center; justify-content: space-between; gap: 36px; padding: 42px; border: 1px solid rgba(201,243,106,.2); border-radius: 25px; background: radial-gradient(ellipse at 100% 0%, rgba(201,243,106,.11), transparent 48%), var(--surface); }
+    .contact-band h2 { max-width: 570px; margin-bottom: 10px; font-size: clamp(29px, 4vw, 42px); }
+    .contact-band p { max-width: 520px; margin-bottom: 0; color: var(--muted); font-size: 14px; }
+    footer { padding: 28px 0 38px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 19px; }
+    .footer-note { margin-top: 16px; color: #748179; font-size: 10px; }
+    @media (max-width: 850px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 30px; }
+      .hero-copy { max-width: 680px; }
+      .visual { min-height: 390px; }
+      .map-card { width: min(100%, 500px); }
+      .status-panel { grid-template-columns: 1fr; gap: 20px; }
+      .contact-band { align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-width: 640px) {
+      .container { width: min(var(--content), calc(100% - 32px)); }
+      nav { min-height: 68px; }
+      .nav-links { display: none; }
+      .nav-contact { padding: 10px 12px; font-size: 11px; }
+      .hero { padding: 64px 0 70px; }
+      h1 { font-size: clamp(42px, 13vw, 62px); }
+      .hero-copy { font-size: 15px; }
+      .hero-actions { align-items: stretch; flex-direction: column; max-width: 320px; }
+      .visual { min-height: 340px; margin-top: 2px; }
+      .map-card { min-height: 345px; border-radius: 20px; }
+      .map-canvas { height: 212px; }
+      .route-line { width: 195px; height: 105px; }
+      .section { padding: 72px 0; }
+      .section-head { margin-bottom: 32px; }
+      .signal-grid, .steps { grid-template-columns: 1fr; }
+      .signal { min-height: 0; padding: 23px; }
+      .signal h3 { margin-top: 20px; }
+      .step { min-height: auto; padding: 24px; }
+      .step + .step { border-left: 0; border-top: 1px solid var(--line); }
+      .status-row { grid-template-columns: 1fr; gap: 6px; }
+      .contact-band { padding: 28px 22px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">İçeriğe geç</a>
+  <div class="nav-wrap">
+    <nav class="container" aria-label="Ana menü">
+      <a class="brand" href="#top" aria-label="Piaroute ana sayfa">
+        <span class="brand-mark" aria-hidden="true">P</span>
+        <span><span class="brand-name">piaroute</span><span class="brand-sub">Yol verisi · mobilite</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="#yaklasim">Yaklaşım</a>
+        <a href="#yapay-zeka">Yapay zekâ</a>
+        <a href="#durum">Proje durumu</a>
+      </div>
+      <a class="button button-quiet nav-contact" href="#iletisim">İletişime geç <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> Piri Rota mobilite projesi</div>
+          <h1>Yoldaki değişimi <em>birlikte</em> fark edelim.</h1>
+          <p class="hero-copy">Piri Rota; çukur, kasis ve yol bozukluklarına ilişkin sürücü bildirimlerini harita ve rota deneyimiyle buluşturan bir mobil uygulamadır. Uygulamadan gelen verileri anlamlandıracak yapay zekâ katmanı geliştirilmektedir.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#yaklasim">Projeyi keşfet <span aria-hidden="true">↓</span></a>
+            <a class="button button-quiet" href="mailto:kadir@piaroute.com">İş birliği için yazın <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="status-note"><span class="status-icon" aria-hidden="true">i</span><span><strong>Şeffaf geliştirme durumu</strong><br>Mobil uygulama mağaza yayınına hazır; henüz yayımlanmadı. Yapay zekâ geliştirme çalışmaları sürüyor.</span></div>
+        </div>
+
+        <div class="visual" role="img" aria-label="Piri Rota için temsili yol haritası ve çukur bildirimi görünümü">
+          <div class="visual-glow" aria-hidden="true"></div>
+          <div class="map-card">
+            <div class="map-top">
+              <div><div class="map-top-title">Piri Rota · Yol görünümü</div><div class="map-top-sub">Temsili ürün görünümü</div></div>
+              <div class="map-live"><i aria-hidden="true"></i> YOL BİLDİRİMLERİ</div>
+            </div>
+            <div class="map-canvas" aria-hidden="true">
+              <div class="road"></div><div class="route-line"></div>
+              <div class="map-pin pin-one"><span>!</span></div><div class="map-pin pin-two"><span>⌃</span></div>
+              <div class="you-dot"></div>
+              <span class="map-label label-a">ATATÜRK CD.</span><span class="map-label label-b">SAHİL YOLU</span><span class="map-label label-c">MERKEZ</span>
+            </div>
+            <div class="map-bottom">
+              <div class="report-mini"><div class="report-icon" aria-hidden="true">⌁</div><div><div class="report-title">Yol bildirimi</div><div class="report-sub">Kullanıcı bildirimi · doğrulama bekliyor</div></div></div>
+              <div class="confidence"><b>Çukur</b><span>Örnek kayıt</span></div>
+            </div>
+          </div>
+          <div class="mock-caption">Arayüz görseli temsili amaçlıdır</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="yaklasim">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Yol verisini anlamak</div>
+          <h2>Tek bir sinyale bağlı kalmayan bir yaklaşım.</h2>
+          <p class="section-intro">Yol anomalisini doğru değerlendirmek için farklı kaynaklardan gelen bilgileri zaman ve konum bağlamında bir araya getirmeyi hedefliyoruz.</p>
+        </div>
+        <div class="signal-grid">
+          <article class="signal"><div class="signal-number">01 / TOPLULUK</div><h3>Sürücü bildirimi</h3><p>Kullanıcı, gördüğü çukur veya kasisi seçip konumuyla birlikte bildirebilir. Tekrarlanan bildirimler aynı noktadaki kanıtı güçlendirir.</p></article>
+          <article class="signal"><div class="signal-number">02 / GÖRSEL</div><h3>Fotoğraf bağlamı</h3><p>Fotoğraf, bildirilen yol durumunu anlamlandırmaya ve yanlış sınıflandırmaları azaltmaya yardımcı olacak bir veri kaynağıdır.</p></article>
+          <article class="signal"><div class="signal-number">03 / SENSÖR</div><h3>Hareket sinyalleri</h3><p>Uygulama sensörlerinden elde edilecek ölçümlerin bildirimlerle birlikte değerlendirilmesi, geliştirme planındaki sonraki adımlardan biridir.</p><span class="signal-tag">Geliştirme aşamasında</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="yapay-zeka">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Piri Rota yapay zekâsı</div>
+          <h2>Bildirimleri anlamlı yol bilgisine dönüştürmek.</h2>
+          <p class="section-intro">Yapay zekâ, Piri Rota’dan gelen manuel bildirimleri, fotoğrafları ve ilerleyen aşamada sensör ölçümlerini birlikte işlemek üzere geliştiriliyor. Hedef, anomali türünü ayırmak; veri biriktikçe ciddiyetini ve güncel durumunu daha iyi değerlendirmek.</p>
+        </div>
+        <div class="steps">
+          <article class="step"><div class="step-index">01</div><h3>Veriyi birleştir</h3><p>Bildirim, fotoğraf ve sensör ölçümlerini konum ve zaman bilgisiyle ilişkilendir.</p></article>
+          <article class="step"><div class="step-index">02</div><h3>Anomaliyi sınıflandır</h3><p>Çukur, kasis, yol bozukluğu veya belirsiz kayıt ayrımını güven puanıyla değerlendir.</p></article>
+          <article class="step"><div class="step-index">03</div><h3>Kanıtla güncelle</h3><p>Tekrar bildirimleri, sürücü doğrulamalarını ve uygun olduğunda resmî yol çalışması duyurularını birlikte kullan.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section status-section" id="durum">
+      <div class="container status-panel">
+        <div>
+          <div class="kicker">Bugünkü durum</div>
+          <h2>Önce çalışan ürün. Sonra doğrulanan yapay zekâ.</h2>
+          <p class="section-intro">Piri Rota bireysel Ar-Ge çalışmasıyla geliştiriliyor. Mevcut ürün ile devam eden araştırma adımlarını birbirinden açıkça ayırıyoruz.</p>
+        </div>
+        <dl class="status-list">
+          <div class="status-row"><dt>Mobil uygulama</dt><dd>Mağaza yayınına hazır durumda; henüz halka açık yayımlanmadı.</dd></div>
+          <div class="status-row"><dt>Yapay zekâ</dt><dd>Piri Rota ile koordineli çalışacak anomali sınıflandırma ve değerlendirme bileşeni geliştiriliyor.</dd></div>
+          <div class="status-row"><dt>Doğrulama</dt><dd>Gerçek kullanım verisi ve kullanıcı onayıyla modelin doğruluğunu aşamalı olarak ölçmek hedefleniyor.</dd></div>
+          <div class="status-row"><dt>İş birlikleri</dt><dd>Pilot, teknik iş birliği ve erken aşama destek görüşmelerine açığız.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" id="iletisim">
+      <div class="container">
+        <div class="contact-band">
+          <div><div class="kicker">İş birliği</div><h2>Yol güvenliği için birlikte çalışalım.</h2><p>Piri Rota’nın geliştirme süreci, pilot uygulama veya teknoloji iş birlikleri hakkında konuşmak için doğrudan ulaşabilirsiniz.</p></div>
+          <a class="button button-primary" href="mailto:kadir@piaroute.com">Kadir Önay’a ulaşın <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">P</span><span><span class="brand-name">piaroute</span><span class="brand-sub">Piri Rota</span></span></a>
+        <div class="footer-links"><a href="mailto:kadir@piaroute.com">kadir@piaroute.com</a><a href="tel:+905071345933">+90 507 134 59 33</a><a href="https://www.linkedin.com/in/kadironay1/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://github.com/kadir0123" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+      </div>
+      <div class="footer-note">© 2026 Piaroute · Piri Rota yapay zekâ geliştirmesi sürmektedir. Bu sayfada temsili arayüz görseli kullanılmıştır.</div>
+    </div>
+  </footer>
+</body>
+</html>

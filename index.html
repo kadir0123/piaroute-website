@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f3ee">
-  <meta name="description" content="Piaroute, sürücü bildirimleri ve yol verisini anlamlandırmaya odaklanan bir mobilite uygulaması ve yapay zekâ Ar-Ge projesidir.">
-  <meta property="og:title" content="Piaroute — Yol verisini anlamlandırıyoruz">
-  <meta property="og:description" content="Sürücü bildirimleri, fotoğraflar ve yol verisiyle daha anlaşılır bir mobilite deneyimi.">
+  <meta name="description" content="Piaroute, lastik dönüşünden enerji üretimi ve yol anomalisi tespitini mobil uygulama ve yapay zekâ Ar-Ge çalışmalarıyla bir araya getiriyor.">
+  <meta property="og:title" content="Piaroute — Enerji üretimi ve yol verisi">
+  <meta property="og:description" content="Bisiklet prototipi, Piaroute mobil uygulaması ve tescilli faydalı model üzerine bir mobilite Ar-Ge projesi.">
   <meta property="og:type" content="website">
   <link rel="icon" type="image/png" href="assets/piaroute-app-icon.png">
-  <title>Piaroute — Yol verisini anlamlandırıyoruz</title>
+  <title>Piaroute — Enerji üretimi ve yol verisi</title>
   <style>
     :root {
       color-scheme: light;
@@ -98,6 +98,44 @@
     .milestone dt { color: var(--purple); font-size: 10px; font-weight: 760; letter-spacing: .08em; text-transform: uppercase; }
     .milestone dd { margin: 0; color: var(--ink); font-size: 13px; line-height: 1.7; }
     .milestone dd span { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; }
+    .system-flow { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); }
+    .system-flow article { min-height: 190px; padding: 22px 22px 24px 0; }
+    .system-flow article + article { padding-left: 22px; border-left: 1px solid var(--line); }
+    .flow-index { color: var(--rust); font: 15px var(--serif); }
+    .system-flow h3 { margin: 31px 0 8px; font-size: 16px; }
+    .system-flow p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.75; }
+    .use-cases { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; margin-top: 34px; }
+    .use-case { padding-top: 16px; border-top: 1px solid var(--line); }
+    .use-case h3 { margin: 0 0 8px; font: 20px var(--serif); }
+    .use-case p { max-width: 480px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.75; }
+    .progress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+    .progress-column h3 { margin: 0; padding: 0 0 13px; border-bottom: 1px solid var(--ink); font-size: 15px; }
+    .progress-list { margin: 0; padding: 0; list-style: none; }
+    .progress-list li { position: relative; padding: 14px 0 14px 22px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .progress-list li::before { position: absolute; left: 0; color: var(--purple); font-weight: 800; }
+    .progress-column.done li::before { content: "✓"; }
+    .progress-column.next li::before { content: "→"; }
+    .ip-note { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; align-items: start; margin-top: 42px; padding-top: 22px; border-top: 1px solid var(--ink); }
+    .ip-note h3 { margin: 0; font: 22px var(--serif); }
+    .ip-note p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+    .commercial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+    .commercial-grid h3 { margin: 0 0 14px; font: 22px var(--serif); }
+    .market-list, .revenue-list { margin: 0; padding: 0; list-style: none; }
+    .market-list li, .revenue-list li { padding: 13px 0; border-top: 1px solid var(--line); }
+    .market-list strong, .revenue-list strong { display: block; font-size: 13px; }
+    .market-list span, .revenue-list span { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+    .model-note { margin: 28px 0 0; padding-top: 15px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; line-height: 1.75; }
+    .pilot { background: #eeece6; }
+    .pilot-top { display: flex; justify-content: space-between; align-items: end; gap: 32px; margin-bottom: 34px; }
+    .pilot-top h2 { margin-bottom: 0; }
+    .pilot-top p { max-width: 360px; margin-bottom: 3px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+    .pilot-phases { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); }
+    .pilot-phase { padding: 17px 22px 19px 0; }
+    .pilot-phase + .pilot-phase { padding-left: 22px; border-left: 1px solid var(--line); }
+    .pilot-phase span { color: var(--purple); font-size: 10px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+    .pilot-phase h3 { margin: 18px 0 6px; font-size: 15px; }
+    .pilot-phase p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.7; }
+    .pilot-caveat { margin: 14px 0 0; color: var(--muted); font-size: 10px; }
     .contact { padding: 78px 0 88px; }
     .contact-inner { display: flex; justify-content: space-between; align-items: end; gap: 36px; padding-top: 30px; border-top: 1px solid var(--ink); }
     .contact-inner h2 { max-width: 600px; margin: 14px 0 10px; }
@@ -112,6 +150,10 @@
       .visual { min-height: 390px; }
       .section-head { grid-template-columns: 1fr; gap: 13px; margin-bottom: 34px; }
       .development-grid { grid-template-columns: 1fr; gap: 28px; }
+      .system-flow { grid-template-columns: 1fr 1fr; }
+      .system-flow article:nth-child(3) { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+      .system-flow article:nth-child(4) { border-top: 1px solid var(--line); }
+      .commercial-grid { gap: 36px; }
     }
     @media (max-width: 600px) {
       .container { width: calc(100% - 36px); }
@@ -133,6 +175,15 @@
       .process article + article { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
       .process h3 { margin-top: 20px; }
       .milestone { grid-template-columns: 1fr; gap: 6px; }
+      .system-flow { grid-template-columns: 1fr; }
+      .system-flow article, .system-flow article + article, .system-flow article:nth-child(3), .system-flow article:nth-child(4) { min-height: 0; padding: 17px 0; border-left: 0; border-top: 1px solid var(--line); }
+      .system-flow article:first-child { border-top: 0; }
+      .system-flow h3 { margin-top: 16px; }
+      .use-cases, .progress-grid, .ip-note, .commercial-grid { grid-template-columns: 1fr; gap: 28px; }
+      .pilot-top { align-items: flex-start; flex-direction: column; gap: 14px; }
+      .pilot-phases { grid-template-columns: 1fr; }
+      .pilot-phase, .pilot-phase + .pilot-phase { padding: 16px 0; border-left: 0; border-top: 1px solid var(--line); }
+      .pilot-phase:first-child { border-top: 0; }
       .contact { padding: 62px 0; }
       .contact-inner { align-items: flex-start; flex-direction: column; gap: 22px; }
       .footer-inner { align-items: flex-start; flex-direction: column; }
@@ -148,7 +199,7 @@
       <a class="brand" href="#top" aria-label="Piaroute ana sayfa">
         <img class="brand-logo" src="assets/piaroute-app-icon.png" alt=""><span class="brand-name">Piaroute</span>
       </a>
-      <div class="nav-links"><a href="#yaklasim">Yaklaşım</a><a href="#gelistirme">Geliştirme</a><a href="#durum">Proje durumu</a></div>
+      <div class="nav-links"><a href="#sistem">Sistem</a><a href="#ilerleme">İlerleme</a><a href="#model">İş modeli</a></div>
       <a class="nav-cta" href="#iletisim">İletişim <span aria-hidden="true">↗</span></a>
     </nav>
   </header>
@@ -157,17 +208,17 @@
     <section class="hero" id="top">
       <div class="container hero-grid">
         <div>
-          <div class="eyebrow">Yolda karşılaştığımız sorunlar için</div>
-          <h1>Bir çukuru görüyorsan, <em>sonraki sürücü de bilsin.</em></h1>
-          <p class="hero-copy">Piaroute’u, yolda gördüğümüz çukur ve kasisleri diğer sürücülerle paylaşmak kolay olsun diye geliştiriyorum. Uygulama mağazaya gönderilmeye hazır; şimdi bildirimleri ve fotoğrafları daha iyi değerlendirecek yapay zekâ üzerinde çalışıyorum.</p>
+          <div class="eyebrow">Mobilite Ar-Ge: akıllı lastik ve yol verisi</div>
+          <h1>Lastik dönüşünden enerji, <em>yoldan bilgi.</em></h1>
+          <p class="hero-copy">Piaroute, tekerlek dönüşünden enerji üretme yaklaşımını yol anomalilerini tanıma hedefiyle bir araya getiriyor. Üretilen enerjinin önce sistemi beslemesi, kullanılabilir fazlanın araç aküsünde depolanması planlanıyor. Piaroute uygulaması da sürücü bildirimlerini bu yol deneyimine bağlıyor.</p>
           <div class="hero-actions">
-            <a class="button" href="#yaklasim">Nasıl çalıştığını görün <span aria-hidden="true">↘</span></a>
-            <a class="text-link" href="mailto:kadir@piaroute.com">Benimle konuşun</a>
+            <a class="button" href="#sistem">Sistem yaklaşımı <span aria-hidden="true">↘</span></a>
+            <a class="text-link" href="mailto:kadir@piaroute.com">Yatırım ve pilot görüşmesi</a>
           </div>
-          <div class="hero-status"><span><strong>Uygulama</strong> · mağaza gönderimine hazır</span><span><strong>Yapay zekâ</strong> · geliştirme sürüyor</span></div>
+          <div class="hero-status"><span><strong>Bisiklet prototipi:</strong> test edildi</span><span><strong>Araç entegrasyonu:</strong> sıradaki aşama</span></div>
         </div>
-        <div class="visual" role="img" aria-label="Yol bildirimi ve konum bilgisini gösteren temsili rota çizimi">
-          <div class="visual-head"><div class="visual-brand"><img src="assets/piaroute-app-icon.png" alt="Piaroute uygulama logosu"><div class="visual-brand-copy"><strong>Piaroute</strong><span>Yol bildirimleri için</span></div></div><span class="visual-caption">Yol verisi akışı</span></div>
+        <div class="visual" role="img" aria-label="Piaroute uygulama logosu ve temsili yol verisi akışı">
+          <div class="visual-head"><div class="visual-brand"><img src="assets/piaroute-app-icon.png" alt="Piaroute uygulama logosu"><div class="visual-brand-copy"><strong>Piaroute</strong><span>Enerji ve yol verisi</span></div></div><span class="visual-caption">Sistem özeti</span></div>
           <svg class="route-art" viewBox="0 0 520 330" aria-hidden="true" focusable="false">
             <path class="art-road" d="M-20 252 C70 215 84 112 179 126 S278 245 347 200 S414 93 545 64" />
             <path class="art-road-edge" d="M-20 252 C70 215 84 112 179 126 S278 245 347 200 S414 93 545 64" />
@@ -176,58 +227,95 @@
             <circle class="art-dot" cx="177" cy="147" r="8" />
             <circle class="art-dot-end" cx="337" cy="188" r="9" />
             <circle class="art-dot" cx="490" cy="89" r="8" />
-            <text class="art-small" x="28" y="277">BİLDİRİM</text>
-            <text class="art-label" x="146" y="113">Konum</text>
-            <text class="art-label" x="311" y="229">Yol anomalisi</text>
-            <text class="art-small" x="423" y="59">DEĞERLENDİRME</text>
+            <text class="art-small" x="28" y="277">DÖNÜŞ</text>
+            <text class="art-label" x="146" y="113">Enerji</text>
+            <text class="art-label" x="311" y="229">Yol algısı</text>
+            <text class="art-small" x="423" y="59">PIAROUTE</text>
           </svg>
-          <div class="visual-note">Temsili süreç çizimi · canlı veri içermez</div>
+          <div class="visual-note">Temsili sistem çizimi. Teknik ayrıntı içermez.</div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="yaklasim">
+    <section class="section" id="sistem">
       <div class="container">
         <div class="section-head">
-          <div class="section-label">01 / Yaklaşım</div>
-          <div><h2>Bir bildirimi, işe yarar yol bilgisine dönüştürmek.</h2><p class="section-intro">Tek bir fotoğraf ya da işaret, yolun bütün durumunu anlatmaz. Piaroute’un geliştirme hedefi; farklı bildirimleri konum ve zaman bağlamında değerlendirerek sürücülere daha anlamlı bilgi sunmaktır.</p></div>
+          <div class="section-label">01 / Sistem yaklaşımı</div>
+          <div><h2>Enerji önce algılama için kullanılacak.</h2><p class="section-intro">Hedef, tekerlek dönüşünde üretilen enerjiyi önce yol anomalisi tespiti için kullanmak ve kullanılabilir fazlasını araç aküsüne aktarmak. Araç entegrasyonu, enerji aktarımı ve yol koşullarındaki performans sonraki pilot çalışmada doğrulanacak.</p></div>
         </div>
-        <div class="process">
-          <article><div class="process-index">01</div><h3>Yolu bildir</h3><p>Sürücü, karşılaştığı çukur veya kasisi uygulama üzerinden konumuyla birlikte işaretler.</p><span class="process-tag">Uygulama akışı</span></article>
-          <article><div class="process-index">02</div><h3>Kanıtı bir araya getir</h3><p>Fotoğraf, tekrar eden kullanıcı bildirimleri ve ileride sensör verileri aynı yol noktası için birlikte ele alınır.</p><span class="process-tag">Geliştiriliyor</span></article>
-          <article><div class="process-index">03</div><h3>Durumu anlamlandır</h3><p>Yol anomalisinin türünü ayırmak ve veri biriktikçe ciddiyetini değerlendirmek yapay zekâ çalışmasının hedefidir.</p><span class="process-tag">Ar-Ge hedefi</span></article>
+        <div class="system-flow" aria-label="Hedeflenen sistem akışı">
+          <article><div class="flow-index">01</div><h3>Dönüşten enerji</h3><p>Tekerleğin hareketinden elektrik üretimi.</p></article>
+          <article><div class="flow-index">02</div><h3>Yol etkisini algıla</h3><p>Yol kaynaklı sinyalleri değerlendirmek için sistemi besleme.</p></article>
+          <article><div class="flow-index">03</div><h3>Anomaliyi ayırt et</h3><p>Piaroute ile birlikte geliştirilecek analiz katmanıyla çukur ve kasis ayrımı.</p></article>
+          <article><div class="flow-index">04</div><h3>Fazlayı depola</h3><p>Kullanılabilir enerjiyi araç aküsüne aktarmayı pilotta doğrulama.</p></article>
+        </div>
+        <div class="use-cases">
+          <article class="use-case"><h3>Akıllı lastik</h3><p>Enerji hasadı ve yol anomalisi tespiti aynı uygulama alanında. Üretilen enerjinin önce algılama sistemini beslemesi hedefleniyor.</p></article>
+          <article class="use-case"><h3>Yalnızca enerji üretimi</h3><p>Uygun mühendislik uyarlamasıyla başka dönen sistemlere de uygulanabilir. Her kullanım alanının ayrıca test edilmesi gerekir.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="section development" id="gelistirme">
-      <div class="container development-grid">
-        <div><div class="section-label">02 / Yapay zekâ Ar-Ge</div><h2>Önce yol sorununu tanımak. Sonra ciddiyetini anlamak.</h2><p class="development-copy">Bu çalışmayı da Piaroute’la birlikte kendim geliştiriyorum. Elimdeki 100’den fazla yol fotoğrafını ilk model çalışmaları için kullanacağım. İlerleyen aşamada uygulama bildirimlerini sensör verileriyle birlikte değerlendirmek istiyorum.</p></div>
-        <dl class="milestones">
-          <div class="milestone"><dt>Elimde olan</dt><dd>100’den fazla yol anomalisi fotoğrafı.<span>İlk sınıflandırma çalışmaları için başlangıç verisi.</span></dd></div>
-          <div class="milestone"><dt>İlk hedef</dt><dd>Çukur, kasis ve diğer yol sorunlarını ayırt etmek.<span>Modelin başarısı gerçek testlerle ölçülecek.</span></dd></div>
-          <div class="milestone"><dt>Daha sonrası</dt><dd>Sensör verisiyle anomali ciddiyetini değerlendirmek.<span>Bu özellikler şu anda geliştirme planında.</span></dd></div>
-        </dl>
-      </div>
-    </section>
-
-    <section class="section" id="durum">
+    <section class="section development" id="ilerleme">
       <div class="container">
         <div class="section-head">
-          <div class="section-label">03 / Bugünkü durum</div>
-          <div><h2>İlerlemeyi olduğu gibi paylaşırız.</h2><p class="section-intro">Piaroute bireysel Ar-Ge çalışmasıyla ilerliyor. Uygulama ile geliştirilmekte olan yapay zekâ özelliklerinin durumunu birbirinden ayrı ve açık biçimde sunuyoruz.</p></div>
+          <div class="section-label">02 / Ar-Ge ilerlemesi</div>
+          <div><h2>Bisiklet prototipi ve ilk enerji testleri tamamlandı.</h2><p class="section-intro">Piaroute’u bireysel olarak geliştiriyorum. Şimdi prototipi araç uygulamasına taşıyacak entegrasyon, yapay zekâ ve saha doğrulama desteği arıyorum.</p></div>
         </div>
-        <div class="process">
-          <article><div class="process-index">ÜRÜN</div><h3>Mobil uygulama</h3><p>Mağazaya gönderime hazır; henüz halka açık olarak yayımlanmadı.</p></article>
-          <article><div class="process-index">AR-GE</div><h3>Yapay zekâ</h3><p>Uygulamayla koordineli çalışacak yol anomalisi analiz sistemi geliştiriliyor.</p></article>
-          <article><div class="process-index">İŞ BİRLİĞİ</div><h3>Pilot görüşmeleri</h3><p>Saha testi, teknik ortaklık ve erken aşama destek için iletişime açığız.</p></article>
+        <div class="progress-grid">
+          <div class="progress-column done"><h3>Tamamlanan çalışmalar</h3><ul class="progress-list">
+            <li>Test uygulamalarında üretilen enerji ölçüldü ve karşılaştırıldı.</li>
+            <li>Bisiklet üzerinde çalışan prototip geliştirildi ve denendi.</li>
+            <li>Piaroute mobil uygulamasının MVP’si tamamlandı; yayın öncesi testleri sürüyor.</li>
+          </ul></div>
+          <div class="progress-column next"><h3>Sıradaki aşama</h3><ul class="progress-list">
+            <li>100’den fazla yol fotoğrafıyla anomali sınıflandırması için yapay zekâ model çalışmalarını başlatmak.</li>
+            <li>Lastik ve araç entegrasyonunu gerçekleştirmek.</li>
+            <li>Aküye enerji aktarımını ve gerçek yol koşullarındaki performansı ölçmek.</li>
+          </ul></div>
         </div>
+        <div class="ip-note" id="fikri-mulkiyet">
+          <h3>Fikrî mülkiyet koruması</h3>
+          <p><strong>Faydalı model tescilli.</strong> Patent başvurusu devam ediyor. Teknik uygulama ayrıntılarını açık sayfada paylaşmıyorum; kapsamlı inceleme kontrollü yatırımcı ve pilot görüşmelerinde yapılabilir.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="model">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-label">03 / Pazar ve iş modeli</div>
+          <div><h2>Üreticilere teknoloji, şehirlere yol bilgisi.</h2><p class="section-intro">Gelir yolları henüz pilot aşamasında doğrulanacak. Tüketici uygulamasını ücretsiz sunarak topluluk bildirimleriyle yol verisi havuzunu büyütmek hedefleniyor.</p></div>
+        </div>
+        <div class="commercial-grid">
+          <div><h3>Hedef iş ortakları</h3><ul class="market-list">
+            <li><strong>Lastik üreticileri</strong><span>Akıllı lastik ürünlerine yeni işlev eklemek isteyen üreticiler.</span></li>
+            <li><strong>Otomotiv üreticileri</strong><span>Güvenlik ve araç sistemleri geliştiren OEM ekipleri.</span></li>
+            <li><strong>Otonom sürüş geliştiricileri</strong><span>Sürüş kararlarını yol verisiyle beslemek isteyen şirketler.</span></li>
+          </ul></div>
+          <div><h3>Ticarileşme seçenekleri</h3><ul class="revenue-list">
+            <li><strong>Teknoloji lisanslama</strong><span>Akıllı lastik yaklaşımını lastik ve otomotiv üreticileriyle lisanslama.</span></li>
+            <li><strong>Yol verisi hizmeti</strong><span>Topluluk verisini yerel yönetimlere ve harita sağlayıcılarına sunma hedefi.</span></li>
+          </ul><p class="model-note">Ücretsiz uygulamayla topluluk verisi havuzunu büyütmek hedefleniyor. Veri hizmetinin kapsamı, kullanıcı izinleri ve alıcı talebi pilot görüşmelerinde belirlenecek.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section pilot" id="pilot">
+      <div class="container">
+        <div class="pilot-top"><div><div class="section-label">04 / Yatırım ve pilot</div><h2>Araç entegrasyonuna geçmek için<br>pilot ortağı arıyorum.</h2></div><p>Aradığım destek, lastik ve araç entegrasyonu, yapay zekâ geliştirmesi ve kontrollü saha testleri için.</p></div>
+        <div class="pilot-phases">
+          <article class="pilot-phase"><span>İlk 30 gün</span><h3>Entegrasyon planı</h3><p>Pilot ortağıyla uygun araç, entegrasyon kapsamı ve güvenli test planını belirleme.</p></article>
+          <article class="pilot-phase"><span>31–60. günler</span><h3>Kontrollü saha denemesi</h3><p>Lastik ve araç üzerindeki sistemi seçilen koşullarda deneme.</p></article>
+          <article class="pilot-phase"><span>61–90. günler</span><h3>Enerji ve algılama ölçümü</h3><p>Enerji dengesiyle anomali tespit performansını değerlendirme.</p></article>
+        </div>
+        <p class="pilot-caveat">Süreler öneri niteliğindedir; pilot ortağı, araç ve yatırım kapsamıyla birlikte netleştirilecektir.</p>
       </div>
     </section>
 
     <section class="contact" id="iletisim">
       <div class="container contact-inner">
-        <div><div class="section-label">Kurucudan · Kadir Önay</div><h2>Bu projeyi tek başıma geliştiriyorum.</h2><p>Bir pilot fikriniz, öneriniz ya da birlikte çalışma teklifiniz varsa bana yazın.</p></div>
+        <div><div class="section-label">Piaroute’u geliştiren Kadir Önay</div><h2>Yatırım ve pilot görüşmelerine açığım.</h2><p>Projenin sonraki aşamasını birlikte değerlendirmek için bana yazın.</p></div>
         <a class="button" href="mailto:kadir@piaroute.com">E-posta gönder <span aria-hidden="true">↗</span></a>
       </div>
     </section>

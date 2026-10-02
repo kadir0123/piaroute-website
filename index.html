@@ -4,15 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f3ee">
-  <meta name="description" content="Pieroute, lastik dönüşünden enerji üretimi ve yol anomalisi tespitini mobil uygulama ve yapay zekâ Ar-Ge çalışmalarıyla bir araya getiriyor.">
-  <meta property="og:title" content="Pieroute — Enerji üretimi ve yol verisi">
-  <meta property="og:description" content="Bisiklet prototipi, Pieroute mobil uygulaması ve tescilli faydalı model üzerine bir mobilite Ar-Ge projesi.">
+  <meta name="description" content="Piaroute, lastik dönüşünden enerji üretimi ve yol anomalisi tespitini mobil uygulama ve yapay zekâ Ar-Ge çalışmalarıyla bir araya getiriyor.">
+  <meta property="og:title" content="Piaroute — Enerji üretimi ve yol verisi">
+  <meta property="og:description" content="Bisiklet prototipi, Piaroute mobil uygulaması ve tescilli faydalı model üzerine bir mobilite Ar-Ge projesi.">
   <meta property="og:type" content="website">
-  <link rel="icon" type="image/jpeg" href="assets/pieroute-logo.jpg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <title>Pieroute — Enerji üretimi ve yol verisi</title>
+  <link rel="icon" type="image/png" href="assets/piaroute-logo.png">
+  <title>Piaroute — Enerji üretimi ve yol verisi</title>
   <style>
     :root {
       color-scheme: light;
@@ -26,11 +23,11 @@
       --rust: #e36b7d;
       --white: #fffefa;
       --content: 1160px;
-      --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-family: Georgia, "Times New Roman", serif;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.65 var(--font-sans); -webkit-font-smoothing: antialiased; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.65 var(--font-family); -webkit-font-smoothing: antialiased; }
     a { color: inherit; text-decoration: none; }
     a:focus-visible { outline: 3px solid var(--purple); outline-offset: 4px; }
     h1, h2, h3, p { margin-top: 0; }
@@ -51,7 +48,7 @@
     .eyebrow, .section-label { color: var(--purple); font-size: 11px; line-height: 1.4; font-weight: 760; letter-spacing: .13em; text-transform: uppercase; }
     .eyebrow { display: flex; align-items: center; gap: 10px; }
     .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--purple); }
-    h1 { max-width: 650px; margin: 25px 0 22px; font: 700 clamp(48px, 6.1vw, 76px)/.99 var(--font-sans); letter-spacing: -.055em; }
+    h1 { max-width: 650px; margin: 25px 0 22px; font: 400 clamp(48px, 6.1vw, 76px)/.99 var(--font-family); letter-spacing: -.055em; }
     h1 em { color: var(--purple); font-style: normal; }
     .hero-copy { max-width: 560px; margin-bottom: 0; color: var(--muted); font-size: 16px; line-height: 1.85; }
     .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: 31px; }
@@ -68,7 +65,7 @@
     .visual-brand-copy { display: grid; gap: 2px; }
     .visual-brand-copy strong { font-size: 14px; letter-spacing: -.02em; }
     .visual-brand-copy span { color: var(--muted); font-size: 11px; }
-    .visual-index { color: var(--muted); font: 500 13px var(--font-sans); }
+    .visual-index { color: var(--muted); font: 400 13px var(--font-family); }
     .visual-caption { color: var(--muted); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
     .route-art { position: absolute; inset: 60px 18px 28px; width: calc(100% - 36px); height: calc(100% - 88px); }
     .art-road { fill: none; stroke: #fffefa; stroke-width: 27; stroke-linecap: round; stroke-linejoin: round; }
@@ -76,18 +73,18 @@
     .art-route { fill: none; stroke: var(--purple); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1 0; }
     .art-dot { fill: var(--paper-deep); stroke: var(--purple); stroke-width: 3; }
     .art-dot-end { fill: var(--rust); stroke: var(--paper-deep); stroke-width: 3; }
-    .art-label { fill: var(--ink); font: 12px var(--font-sans); }
-    .art-small { fill: var(--muted); font: 10px var(--font-sans); letter-spacing: 1px; }
+    .art-label { fill: var(--ink); font: 12px var(--font-family); }
+    .art-small { fill: var(--muted); font: 10px var(--font-family); letter-spacing: 1px; }
     .visual-note { position: absolute; right: 24px; bottom: 19px; color: var(--muted); font-size: 10px; }
     .section { padding: 92px 0; border-top: 1px solid var(--line); }
     .section-head { display: grid; grid-template-columns: .68fr 1.32fr; gap: 50px; align-items: start; margin-bottom: 48px; }
     .section-label { padding-top: 8px; }
-    h2 { max-width: 720px; margin-bottom: 14px; font: 650 clamp(34px, 4.3vw, 52px)/1.06 var(--font-sans); letter-spacing: -.045em; }
+    h2 { max-width: 720px; margin-bottom: 14px; font: 400 clamp(34px, 4.3vw, 52px)/1.06 var(--font-family); letter-spacing: -.045em; }
     .section-intro { max-width: 660px; margin-bottom: 0; color: var(--muted); font-size: 14px; line-height: 1.85; }
     .process { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); }
     .process article { min-height: 205px; padding: 23px 28px 25px 0; }
     .process article + article { padding-left: 28px; border-left: 1px solid var(--line); }
-    .process-index { color: var(--rust); font: 500 15px var(--font-sans); }
+    .process-index { color: var(--rust); font: 400 15px var(--font-family); }
     .process h3 { margin: 34px 0 9px; font-size: 17px; letter-spacing: -.02em; }
     .process p { max-width: 300px; margin-bottom: 0; color: var(--muted); font-size: 13px; line-height: 1.75; }
     .process-tag { display: inline-block; margin-top: 14px; color: var(--purple); font-size: 10px; font-weight: 730; letter-spacing: .05em; text-transform: uppercase; }
@@ -103,12 +100,12 @@
     .system-flow { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); }
     .system-flow article { min-height: 190px; padding: 22px 22px 24px 0; }
     .system-flow article + article { padding-left: 22px; border-left: 1px solid var(--line); }
-    .flow-index { color: var(--rust); font: 500 15px var(--font-sans); }
+    .flow-index { color: var(--rust); font: 400 15px var(--font-family); }
     .system-flow h3 { margin: 31px 0 8px; font-size: 16px; }
     .system-flow p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.75; }
     .use-cases { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; margin-top: 34px; }
     .use-case { padding-top: 16px; border-top: 1px solid var(--line); }
-    .use-case h3 { margin: 0 0 8px; font: 600 20px var(--font-sans); }
+    .use-case h3 { margin: 0 0 8px; font: 400 20px var(--font-family); }
     .use-case p { max-width: 480px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.75; }
     .progress-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
     .progress-column h3 { margin: 0; padding: 0 0 13px; border-bottom: 1px solid var(--ink); font-size: 15px; }
@@ -118,10 +115,10 @@
     .progress-column.done li::before { content: "✓"; }
     .progress-column.next li::before { content: "→"; }
     .ip-note { display: grid; grid-template-columns: 1fr 1fr; gap: 35px; align-items: start; margin-top: 42px; padding-top: 22px; border-top: 1px solid var(--ink); }
-    .ip-note h3 { margin: 0; font: 600 22px var(--font-sans); }
+    .ip-note h3 { margin: 0; font: 400 22px var(--font-family); }
     .ip-note p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
     .commercial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
-    .commercial-grid h3 { margin: 0 0 14px; font: 600 22px var(--font-sans); }
+    .commercial-grid h3 { margin: 0 0 14px; font: 400 22px var(--font-family); }
     .market-list, .revenue-list { margin: 0; padding: 0; list-style: none; }
     .market-list li, .revenue-list li { padding: 13px 0; border-top: 1px solid var(--line); }
     .market-list strong, .revenue-list strong { display: block; font-size: 13px; }
@@ -198,8 +195,8 @@
   <a class="skip-link" href="#main">İçeriğe geç</a>
   <header class="site-header">
     <nav class="nav container" aria-label="Ana menü">
-      <a class="brand" href="#top" aria-label="Pieroute ana sayfa">
-        <img class="brand-logo" src="assets/pieroute-logo.jpg" alt=""><span class="brand-name">Pieroute</span>
+      <a class="brand" href="#top" aria-label="Piaroute ana sayfa">
+        <img class="brand-logo" src="assets/piaroute-logo.png" alt=""><span class="brand-name">Piaroute</span>
       </a>
       <div class="nav-links"><a href="#sistem">Sistem</a><a href="#ilerleme">İlerleme</a><a href="#model">İş modeli</a></div>
       <a class="nav-cta" href="#iletisim">İletişim <span aria-hidden="true">↗</span></a>
@@ -212,15 +209,15 @@
         <div>
           <div class="eyebrow">Mobilite Ar-Ge: akıllı lastik ve yol verisi</div>
           <h1>Lastik dönüşünden enerji, <em>yoldan bilgi.</em></h1>
-          <p class="hero-copy">Pieroute, tekerlek dönüşünden enerji üretme yaklaşımını yol anomalilerini tanıma hedefiyle bir araya getiriyor. Üretilen enerjinin önce sistemi beslemesi, kullanılabilir fazlanın araç aküsünde depolanması planlanıyor. Pieroute uygulaması da sürücü bildirimlerini bu yol deneyimine bağlıyor.</p>
+          <p class="hero-copy">Piaroute, tekerlek dönüşünden enerji üretme yaklaşımını yol anomalilerini tanıma hedefiyle bir araya getiriyor. Üretilen enerjinin önce sistemi beslemesi, kullanılabilir fazlanın araç aküsünde depolanması planlanıyor. Piaroute uygulaması da sürücü bildirimlerini bu yol deneyimine bağlıyor.</p>
           <div class="hero-actions">
             <a class="button" href="#sistem">Sistem yaklaşımı <span aria-hidden="true">↘</span></a>
             <a class="text-link" href="mailto:kadir@piaroute.com">Yatırım ve pilot görüşmesi</a>
           </div>
           <div class="hero-status"><span><strong>Bisiklet prototipi:</strong> test edildi</span><span><strong>Araç entegrasyonu:</strong> sıradaki aşama</span></div>
         </div>
-        <div class="visual" role="img" aria-label="Pieroute uygulama logosu ve temsili yol verisi akışı">
-          <div class="visual-head"><div class="visual-brand"><img src="assets/pieroute-logo.jpg" alt="Pieroute uygulama logosu"><div class="visual-brand-copy"><strong>Pieroute</strong><span>Enerji ve yol verisi</span></div></div><span class="visual-caption">Sistem özeti</span></div>
+        <div class="visual" role="img" aria-label="Piaroute uygulama logosu ve temsili yol verisi akışı">
+          <div class="visual-head"><div class="visual-brand"><img src="assets/piaroute-logo.png" alt="Piaroute uygulama logosu"><div class="visual-brand-copy"><strong>Piaroute</strong><span>Enerji ve yol verisi</span></div></div><span class="visual-caption">Sistem özeti</span></div>
           <svg class="route-art" viewBox="0 0 520 330" aria-hidden="true" focusable="false">
             <path class="art-road" d="M-20 252 C70 215 84 112 179 126 S278 245 347 200 S414 93 545 64" />
             <path class="art-road-edge" d="M-20 252 C70 215 84 112 179 126 S278 245 347 200 S414 93 545 64" />
@@ -232,7 +229,7 @@
             <text class="art-small" x="28" y="277">DÖNÜŞ</text>
             <text class="art-label" x="146" y="113">Enerji</text>
             <text class="art-label" x="311" y="229">Yol algısı</text>
-            <text class="art-small" x="423" y="59">PIEROUTE</text>
+            <text class="art-small" x="423" y="59">PIAROUTE</text>
           </svg>
           <div class="visual-note">Temsili sistem çizimi. Teknik ayrıntı içermez.</div>
         </div>
@@ -248,7 +245,7 @@
         <div class="system-flow" aria-label="Hedeflenen sistem akışı">
           <article><div class="flow-index">01</div><h3>Dönüşten enerji</h3><p>Tekerleğin hareketinden elektrik üretimi.</p></article>
           <article><div class="flow-index">02</div><h3>Yol etkisini algıla</h3><p>Yol kaynaklı sinyalleri değerlendirmek için sistemi besleme.</p></article>
-          <article><div class="flow-index">03</div><h3>Anomaliyi ayırt et</h3><p>Pieroute ile birlikte geliştirilecek analiz katmanıyla çukur ve kasis ayrımı.</p></article>
+          <article><div class="flow-index">03</div><h3>Anomaliyi ayırt et</h3><p>Piaroute ile birlikte geliştirilecek analiz katmanıyla çukur ve kasis ayrımı.</p></article>
           <article><div class="flow-index">04</div><h3>Fazlayı depola</h3><p>Kullanılabilir enerjiyi araç aküsüne aktarmayı pilotta doğrulama.</p></article>
         </div>
         <div class="use-cases">
@@ -262,13 +259,13 @@
       <div class="container">
         <div class="section-head">
           <div class="section-label">02 / Ar-Ge ilerlemesi</div>
-          <div><h2>Bisiklet prototipi ve ilk enerji testleri tamamlandı.</h2><p class="section-intro">Pieroute’u bireysel olarak geliştiriyorum. Şimdi prototipi araç uygulamasına taşıyacak entegrasyon, yapay zekâ ve saha doğrulama desteği arıyorum.</p></div>
+          <div><h2>Bisiklet prototipi ve ilk enerji testleri tamamlandı.</h2><p class="section-intro">Piaroute’u bireysel olarak geliştiriyorum. Şimdi prototipi araç uygulamasına taşıyacak entegrasyon, yapay zekâ ve saha doğrulama desteği arıyorum.</p></div>
         </div>
         <div class="progress-grid">
           <div class="progress-column done"><h3>Tamamlanan çalışmalar</h3><ul class="progress-list">
             <li>Test uygulamalarında üretilen enerji ölçüldü ve karşılaştırıldı.</li>
             <li>Bisiklet üzerinde çalışan prototip geliştirildi ve denendi.</li>
-            <li>Pieroute mobil uygulamasının MVP’si tamamlandı; yayın öncesi testleri sürüyor.</li>
+            <li>Piaroute mobil uygulamasının MVP’si tamamlandı; yayın öncesi testleri sürüyor.</li>
           </ul></div>
           <div class="progress-column next"><h3>Sıradaki aşama</h3><ul class="progress-list">
             <li>100’den fazla yol fotoğrafıyla anomali sınıflandırması için yapay zekâ model çalışmalarını başlatmak.</li>
@@ -317,7 +314,7 @@
 
     <section class="contact" id="iletisim">
       <div class="container contact-inner">
-        <div><div class="section-label">Pieroute’u geliştiren Kadir Önay</div><h2>Yatırım ve pilot görüşmelerine açığım.</h2><p>Projenin sonraki aşamasını birlikte değerlendirmek için bana yazın.</p></div>
+        <div><div class="section-label">Piaroute’u geliştiren Kadir Önay</div><h2>Yatırım ve pilot görüşmelerine açığım.</h2><p>Projenin sonraki aşamasını birlikte değerlendirmek için bana yazın.</p></div>
         <a class="button" href="mailto:kadir@piaroute.com">E-posta gönder <span aria-hidden="true">↗</span></a>
       </div>
     </section>
@@ -326,10 +323,10 @@
   <footer>
     <div class="container">
       <div class="footer-inner">
-        <a class="brand" href="#top" aria-label="Pieroute ana sayfa"><img class="brand-logo" src="assets/pieroute-logo.jpg" alt=""><span class="brand-name">Pieroute</span></a>
+        <a class="brand" href="#top" aria-label="Piaroute ana sayfa"><img class="brand-logo" src="assets/piaroute-logo.png" alt=""><span class="brand-name">Piaroute</span></a>
         <div class="footer-links"><a href="mailto:kadir@piaroute.com">E-posta</a><a href="https://www.linkedin.com/in/kadironay1/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://github.com/kadir0123" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
       </div>
-      <div class="footer-note">© 2026 Pieroute · Bu sayfa, mevcut ürün ve devam eden Ar-Ge çalışmalarının durumunu yansıtır.</div>
+      <div class="footer-note">© 2026 Piaroute · Bu sayfa, mevcut ürün ve devam eden Ar-Ge çalışmalarının durumunu yansıtır.</div>
     </div>
   </footer>
 </body>

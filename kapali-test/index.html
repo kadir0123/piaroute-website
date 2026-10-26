@@ -44,8 +44,29 @@
     .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--purple); font-size: 11px; font-weight: 760; letter-spacing: .13em; text-transform: uppercase; }
     .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--purple); }
     h1 { margin: 22px 0 16px; font: 400 clamp(36px, 5vw, 52px)/1.05 var(--font-family); letter-spacing: -.045em; }
-    .lead { max-width: 580px; margin-bottom: 36px; color: var(--muted); font-size: 15px; line-height: 1.85; }
+    .lead { max-width: 580px; margin-bottom: 28px; color: var(--muted); font-size: 15px; line-height: 1.85; }
+    .tester-summary {
+      margin: 0 0 36px; padding: 22px 0 4px;
+      border-top: 1px solid var(--line);
+    }
+    .tester-summary h2 {
+      margin: 0 0 16px; font: 400 22px/1.25 var(--font-family); letter-spacing: -.03em;
+    }
+    .summary-list { margin: 0; padding: 0; list-style: none; }
+    .summary-list li {
+      display: grid; grid-template-columns: 118px 1fr; gap: 14px;
+      padding: 14px 0; border-bottom: 1px solid var(--line);
+    }
+    .summary-list li:last-child { border-bottom: 0; }
+    .summary-list strong {
+      color: var(--purple); font-size: 11px; font-weight: 760;
+      letter-spacing: .06em; text-transform: uppercase;
+    }
+    .summary-list p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
     .form-card { padding: 28px 0 0; border-top: 1px solid var(--ink); }
+    .form-card > h2 {
+      margin: 0 0 18px; font: 400 22px/1.25 var(--font-family); letter-spacing: -.03em;
+    }
     .field { margin-bottom: 20px; }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     label { display: block; margin-bottom: 7px; font-size: 12px; font-weight: 700; letter-spacing: .02em; }
@@ -86,6 +107,7 @@
       .container { width: calc(100% - 36px); }
       .nav { min-height: 68px; }
       .field-row { grid-template-columns: 1fr; }
+      .summary-list li { grid-template-columns: 1fr; gap: 6px; }
       .page { padding: 48px 0 68px; }
     }
   </style>
@@ -104,9 +126,32 @@
     <div class="container">
       <div class="eyebrow">Kapalı test başvurusu</div>
       <h1>Piaroute Kapalı Test Programı</h1>
-      <p class="lead">Yol güvenliği ve akıllı mobilite deneyimini birlikte geliştirmek için ilk test kullanıcılarımızı arıyoruz. Başvurun değerlendirilir; uygun görülenlere test daveti e-posta ile iletilir.</p>
+      <p class="lead">Piaroute, yolda gördüğün çukur, kasis ve yol çalışmalarını birkaç dokunuşla işaretleyebildiğin topluluk destekli bir yol durumu uygulaması. Kapalı testte uygulamayı gerçek yolculuklarında dener, neyin iyi neyin eksik olduğunu bize söylersin.</p>
+
+      <section class="tester-summary" aria-labelledby="tester-summary-title">
+        <h2 id="tester-summary-title">Testçi özeti</h2>
+        <ul class="summary-list">
+          <li>
+            <strong>Uygulama ne yapıyor?</strong>
+            <p>Yolda karşılaştığın çukur, kasis ve yol çalışmalarını uygulamadan işaretlersin. Bildirimler haritada toplanır; ne kadar çok kişi katkı verirse yol o kadar görünür olur. Lastikten enerji üretimi ve otomatik algılama ayrı bir Ar-Ge hattıdır; bu test sürümünün konusu değildir.</p>
+          </li>
+          <li>
+            <strong>Senden ne bekliyoruz?</strong>
+            <p>Günlük yolculuklarında gördüğün yol sorunlarını bildirmen ve neyin kafa karıştırıcı veya eksik olduğunu iletmen. Birkaç dakika yeter; ne kadar kullanacağın sana kalmış.</p>
+          </li>
+          <li>
+            <strong>Hangi cihaz?</strong>
+            <p>Şu an kapalı test <strong>Android</strong> içindir. iPhone sürümü üzerinde çalışıyoruz; formda iPhone seçersen listeye alınırsın, davet iOS hazır olduğunda gelir.</p>
+          </li>
+          <li>
+            <strong>Sonra ne olur?</strong>
+            <p>1) E-postanı bırakırsın. 2) Uygun görülenlere Play kapalı test daveti / bağlantısı mailine gelir. 3) Aynı e-posta ile Google Play’de teste katılıp uygulamayı indirirsin. Başvuru otomatik kabul değildir.</p>
+          </li>
+        </ul>
+      </section>
 
       <form class="form-card" id="apply-form" novalidate>
+        <h2>Başvuru formu</h2>
         <div class="field-row">
           <div class="field">
             <label for="first_name">Ad</label>

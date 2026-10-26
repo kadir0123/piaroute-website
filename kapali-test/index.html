@@ -257,7 +257,14 @@
           try { data = await res.json(); } catch (_) {}
 
           if (!res.ok) {
-            showStatus(false, data.error || "Başvuru gönderilemedi. Lütfen biraz sonra tekrar deneyin.");
+            var errMsg = data.error;
+            if (errMsg && typeof errMsg === "object") {
+              errMsg = errMsg.message || errMsg.code || "";
+            }
+            if (!errMsg || typeof errMsg !== "string") {
+              errMsg = "Başvuru gönderilemedi. Lütfen biraz sonra tekrar deneyin.";
+            }
+            showStatus(false, errMsg);
             if (window.turnstile) window.turnstile.reset();
             btn.disabled = false;
             return;

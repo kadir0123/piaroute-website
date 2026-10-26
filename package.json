@@ -1,8 +1,11 @@
 {
-  "name": "piaroute-web",
+  "name": "piaroute-website",
   "private": true,
   "version": "1.0.0",
   "description": "Piaroute static site + kapalı test API (Vercel)",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "@vercel/postgres": "^0.10.0"
   }

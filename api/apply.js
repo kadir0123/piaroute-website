@@ -1,5 +1,5 @@
-import { createPool } from "@vercel/postgres";
-import { createHash, randomUUID } from "crypto";
+const { createPool } = require("@vercel/postgres");
+const { createHash, randomUUID } = require("crypto");
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
 const NAME_RE = /^[\p{L}\p{M}][\p{L}\p{M}\s'.-]{0,79}$/u;
@@ -11,6 +11,7 @@ function dbUrl() {
     process.env.POSTGRES_URL ||
     process.env.DATABASE_URL ||
     process.env.POSTGRES_PRISMA_URL ||
+    process.env.POSTGRES_URL_NON_POOLING ||
     ""
   );
 }
@@ -31,12 +32,14 @@ function isAllowedOrigin(origin) {
   if (origin === "http://localhost:3000" || origin === "http://127.0.0.1:3000") {
     return process.env.NODE_ENV !== "production";
   }
-  if (
-    process.env.ALLOW_VERCEL_PREVIEW === "true" &&
-    /\.vercel\.app$/.test(new URL(origin).hostname)
-  ) {
-    return true;
-  }
+  try {
+    if (
+      process.env.ALLOW_VERCEL_PREVIEW === "true" &&
+      /\.vercel\.app$/.test(new URL(origin).hostname)
+    ) {
+      return true;
+    }
+  } catch (_) {}
   return false;
 }
 
@@ -73,7 +76,7 @@ function clean(s, max) {
 
 function clientIp(req) {
   const xf = (req.headers["x-forwarded-for"] || "").toString().split(",")[0].trim();
-  return xf || req.socket?.remoteAddress || "";
+  return xf || (req.socket && req.socket.remoteAddress) || "";
 }
 
 function hashIp(ip) {
@@ -102,116 +105,123 @@ async function verifyTurnstile(token, ip) {
   return { ok: !!data.success };
 }
 
-export default async function handler(req, res) {
+function errorMessage(err) {
+  if (!err) return "Başvuru gönderilemedi. Lütfen biraz sonra tekrar deneyin.";
+  if (typeof err === "string") return err;
+  if (typeof err.message === "string") return err.message;
+  return "Başvuru gönderilemedi. Lütfen biraz sonra tekrar deneyin.";
+}
+
+module.exports = async function handler(req, res) {
   const origin = req.headers.origin || "";
 
-  if (req.method === "OPTIONS") {
-    if (!isAllowedOrigin(origin)) {
+  try {
+    if (req.method === "OPTIONS") {
+      if (!isAllowedOrigin(origin)) {
+        json(res, 403, { error: "Forbidden" }, origin);
+        return;
+      }
+      json(res, 204, {}, origin);
+      return;
+    }
+
+    if (req.method !== "POST") {
+      json(res, 405, { error: "Method not allowed" }, origin);
+      return;
+    }
+
+    if (origin && !isAllowedOrigin(origin)) {
       json(res, 403, { error: "Forbidden" }, origin);
       return;
     }
-    json(res, 204, {}, origin);
-    return;
-  }
 
-  if (req.method !== "POST") {
-    json(res, 405, { error: "Method not allowed" }, origin);
-    return;
-  }
-
-  if (origin && !isAllowedOrigin(origin)) {
-    json(res, 403, { error: "Forbidden" }, origin);
-    return;
-  }
-
-  const rawLen = Number(req.headers["content-length"] || 0);
-  if (rawLen > 4096) {
-    json(res, 413, { error: "İstek çok büyük." }, origin);
-    return;
-  }
-
-  let body = req.body;
-  if (typeof body === "string") {
-    if (body.length > 4096) {
+    const rawLen = Number(req.headers["content-length"] || 0);
+    if (rawLen > 4096) {
       json(res, 413, { error: "İstek çok büyük." }, origin);
       return;
     }
-    try {
-      body = JSON.parse(body);
-    } catch {
-      json(res, 400, { error: "Geçersiz istek gövdesi." }, origin);
+
+    let body = req.body;
+    if (typeof body === "string") {
+      if (body.length > 4096) {
+        json(res, 413, { error: "İstek çok büyük." }, origin);
+        return;
+      }
+      try {
+        body = JSON.parse(body);
+      } catch {
+        json(res, 400, { error: "Geçersiz istek gövdesi." }, origin);
+        return;
+      }
+    }
+    body = body || {};
+
+    if (body.website) {
+      json(res, 201, { ok: true, status: "pending" }, origin);
       return;
     }
-  }
-  body = body || {};
 
-  if (body.website) {
-    json(res, 201, { ok: true, status: "pending" }, origin);
-    return;
-  }
+    const first_name = clean(body.first_name, 80);
+    const last_name = clean(body.last_name, 80);
+    const email = clean(body.email, 160).toLowerCase();
+    const device = String(body.device || "").toLowerCase();
+    const play_email_same = !!body.play_email_same;
+    const feedback_interview = !!body.feedback_interview;
+    const product_updates = !!body.product_updates;
+    const privacy_ok = !!body.privacy_ok;
+    const turnstile_token = String(body.turnstile_token || "");
 
-  const first_name = clean(body.first_name, 80);
-  const last_name = clean(body.last_name, 80);
-  const email = clean(body.email, 160).toLowerCase();
-  const device = String(body.device || "").toLowerCase();
-  const play_email_same = !!body.play_email_same;
-  const feedback_interview = !!body.feedback_interview;
-  const product_updates = !!body.product_updates;
-  const privacy_ok = !!body.privacy_ok;
-  const turnstile_token = String(body.turnstile_token || "");
+    if (!NAME_RE.test(first_name) || !NAME_RE.test(last_name) || !EMAIL_RE.test(email)) {
+      json(res, 400, { error: "Ad, soyad ve geçerli e-posta gerekli." }, origin);
+      return;
+    }
+    if (device !== "android" && device !== "ios") {
+      json(res, 400, { error: "Cihaz seçimi geçersiz." }, origin);
+      return;
+    }
+    if (device === "android" && !play_email_same) {
+      json(
+        res,
+        400,
+        { error: "Android için Play hesabı e-posta onayını işaretleyin." },
+        origin,
+      );
+      return;
+    }
+    if (!privacy_ok) {
+      json(res, 400, { error: "Aydınlatma metni onayı gerekli." }, origin);
+      return;
+    }
 
-  if (!NAME_RE.test(first_name) || !NAME_RE.test(last_name) || !EMAIL_RE.test(email)) {
-    json(res, 400, { error: "Ad, soyad ve geçerli e-posta gerekli." }, origin);
-    return;
-  }
-  if (device !== "android" && device !== "ios") {
-    json(res, 400, { error: "Cihaz seçimi geçersiz." }, origin);
-    return;
-  }
-  if (device === "android" && !play_email_same) {
-    json(
-      res,
-      400,
-      { error: "Android için Play hesabı e-posta onayını işaretleyin." },
-      origin,
-    );
-    return;
-  }
-  if (!privacy_ok) {
-    json(res, 400, { error: "Aydınlatma metni onayı gerekli." }, origin);
-    return;
-  }
+    const ip = clientIp(req);
+    const bot = await verifyTurnstile(turnstile_token, ip);
+    if (!bot.ok) {
+      json(res, 403, { error: "Bot koruması başarısız. Tekrar deneyin." }, origin);
+      return;
+    }
 
-  const ip = clientIp(req);
-  const bot = await verifyTurnstile(turnstile_token, ip);
-  if (!bot.ok) {
-    json(res, 403, { error: "Bot koruması başarısız. Tekrar deneyin." }, origin);
-    return;
-  }
+    const db = getPool();
+    if (!db) {
+      json(
+        res,
+        500,
+        { error: "Başvuru şu an alınamıyor. Lütfen daha sonra tekrar deneyin." },
+        origin,
+      );
+      return;
+    }
 
-  const db = getPool();
-  if (!db) {
-    json(
-      res,
-      500,
-      { error: "Başvuru şu an alınamıyor. Lütfen daha sonra tekrar deneyin." },
-      origin,
-    );
-    return;
-  }
+    const id = randomUUID();
+    const ip_hash = hashIp(ip);
 
-  const id = randomUUID();
-  const ip_hash = hashIp(ip);
-
-  try {
     if (ip_hash) {
-      const { rows } = await db.sql`
+      const counted = await db.sql`
         SELECT COUNT(*)::int AS c
         FROM applications
         WHERE ip_hash = ${ip_hash}
           AND created_at > NOW() - INTERVAL '1 hour'
       `;
-      if ((rows[0]?.c || 0) >= MAX_PER_HOUR) {
+      if ((counted.rows[0]?.c || 0) >= MAX_PER_HOUR) {
         json(
           res,
           429,
@@ -233,8 +243,10 @@ export default async function handler(req, res) {
         'pending', ${ip_hash}
       )
     `;
+
+    json(res, 201, { ok: true, status: "pending" }, origin);
   } catch (e) {
-    const msg = String(e?.message || e);
+    const msg = String(e && e.message ? e.message : e);
     if (msg.includes("unique") || msg.includes("duplicate") || msg.includes("23505")) {
       json(
         res,
@@ -247,10 +259,7 @@ export default async function handler(req, res) {
       );
       return;
     }
-    console.error("apply insert error", e?.code || "unknown");
+    console.error("apply failed", e && e.code ? e.code : "unknown");
     json(res, 500, { error: "Kayıt sırasında hata oluştu." }, origin);
-    return;
   }
-
-  json(res, 201, { ok: true, status: "pending" }, origin);
-}
+};

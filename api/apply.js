@@ -1,4 +1,4 @@
-import { sql } from "@vercel/postgres";
+import { createPool } from "@vercel/postgres";
 import { createHash, randomUUID } from "crypto";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
@@ -6,13 +6,31 @@ const NAME_RE = /^[\p{L}\p{M}][\p{L}\p{M}\s'.-]{0,79}$/u;
 const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || "https://www.piaroute.com";
 const MAX_PER_HOUR = Number(process.env.APPLY_RATE_LIMIT_PER_HOUR || 5);
 
+function dbUrl() {
+  return (
+    process.env.POSTGRES_URL ||
+    process.env.DATABASE_URL ||
+    process.env.POSTGRES_PRISMA_URL ||
+    ""
+  );
+}
+
+let pool;
+function getPool() {
+  if (!pool) {
+    const connectionString = dbUrl();
+    if (!connectionString) return null;
+    pool = createPool({ connectionString });
+  }
+  return pool;
+}
+
 function isAllowedOrigin(origin) {
-  if (!origin) return true; // same-origin / some browsers omit Origin on POST
+  if (!origin) return true;
   if (origin === ALLOWED_ORIGIN) return true;
   if (origin === "http://localhost:3000" || origin === "http://127.0.0.1:3000") {
     return process.env.NODE_ENV !== "production";
   }
-  // Vercel preview only if explicitly enabled
   if (
     process.env.ALLOW_VERCEL_PREVIEW === "true" &&
     /\.vercel\.app$/.test(new URL(origin).hostname)
@@ -61,7 +79,7 @@ function clientIp(req) {
 function hashIp(ip) {
   if (!ip) return null;
   const salt = process.env.IP_HASH_SALT;
-  if (!salt) return null; // without salt, do not store reversible-ish hashes
+  if (!salt) return null;
   return createHash("sha256").update(ip + salt).digest("hex");
 }
 
@@ -106,7 +124,6 @@ export default async function handler(req, res) {
     return;
   }
 
-  // Reject oversized payloads early
   const rawLen = Number(req.headers["content-length"] || 0);
   if (rawLen > 4096) {
     json(res, 413, { error: "İstek çok büyük." }, origin);
@@ -128,7 +145,6 @@ export default async function handler(req, res) {
   }
   body = body || {};
 
-  // Honeypot — bots that fill it get a fake success (no DB write)
   if (body.website) {
     json(res, 201, { ok: true, status: "pending" }, origin);
     return;
@@ -173,7 +189,8 @@ export default async function handler(req, res) {
     return;
   }
 
-  if (!process.env.POSTGRES_URL && !process.env.DATABASE_URL) {
+  const db = getPool();
+  if (!db) {
     json(
       res,
       500,
@@ -188,7 +205,7 @@ export default async function handler(req, res) {
 
   try {
     if (ip_hash) {
-      const { rows } = await sql`
+      const { rows } = await db.sql`
         SELECT COUNT(*)::int AS c
         FROM applications
         WHERE ip_hash = ${ip_hash}
@@ -205,7 +222,7 @@ export default async function handler(req, res) {
       }
     }
 
-    await sql`
+    await db.sql`
       INSERT INTO applications (
         id, first_name, last_name, email, device,
         play_email_same, feedback_interview, product_updates,
@@ -219,7 +236,6 @@ export default async function handler(req, res) {
   } catch (e) {
     const msg = String(e?.message || e);
     if (msg.includes("unique") || msg.includes("duplicate") || msg.includes("23505")) {
-      // Same message as success path ambiguity avoided — honest but no email enumeration timing leak beyond this
       json(
         res,
         409,
@@ -231,12 +247,10 @@ export default async function handler(req, res) {
       );
       return;
     }
-    // Never log PII (email/name)
     console.error("apply insert error", e?.code || "unknown");
     json(res, 500, { error: "Kayıt sırasında hata oluştu." }, origin);
     return;
   }
 
-  // Do not echo email/name back
   json(res, 201, { ok: true, status: "pending" }, origin);
 }

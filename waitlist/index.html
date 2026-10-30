@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ee">
+  <meta name="description" content="Piaroute erken erişim listesi. E-posta bırak, davet gelince haberin olsun.">
+  <meta property="og:title" content="Piaroute Erken Erişim Listesi">
+  <meta property="og:description" content="Yoldaki çukur ve kasisleri birlikte görünür kılıyoruz. Erken erişim listesine katıl — sadece e-posta yeter.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" href="../assets/piaroute-logo.png">
+  <title>Erken Erişim Listesi — Piaroute</title>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f7f5f0;
+      --paper-deep: #eeeaf2;
+      --ink: #292533;
+      --muted: #686471;
+      --line: #ddd8e4;
+      --purple: #8b45d3;
+      --purple-dark: #692db1;
+      --rust: #e36b7d;
+      --white: #fffefa;
+      --content: 640px;
+      --font-family: Georgia, "Times New Roman", serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.65 var(--font-family); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible { outline: 3px solid var(--purple); outline-offset: 4px; }
+    h1, h2, p { margin-top: 0; }
+    .container { width: min(var(--content), calc(100% - 56px)); margin-inline: auto; }
+    .site-header { border-bottom: 1px solid var(--line); }
+    .nav { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; }
+    .brand-logo { display: block; width: 40px; height: 40px; object-fit: cover; border-radius: 12px; }
+    .brand-name { font-size: 20px; font-weight: 760; letter-spacing: -.065em; }
+    .nav-cta { color: var(--purple); font-size: 13px; font-weight: 700; }
+    .page { padding: 64px 0 88px; }
+    .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--purple); font-size: 11px; font-weight: 760; letter-spacing: .13em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--purple); }
+    h1 { margin: 22px 0 16px; font: 400 clamp(34px, 5vw, 48px)/1.08 var(--font-family); letter-spacing: -.045em; }
+    .lead { max-width: 520px; margin-bottom: 32px; color: var(--muted); font-size: 15px; line-height: 1.85; }
+    .form-card { padding: 28px 0 0; border-top: 1px solid var(--ink); }
+    .field { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 7px; font-size: 12px; font-weight: 700; letter-spacing: .02em; }
+    .hint { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; line-height: 1.6; }
+    input[type="email"] {
+      width: 100%; min-height: 46px; padding: 0 14px;
+      border: 1px solid var(--line); background: var(--white); color: var(--ink);
+      font: 400 15px/1.4 var(--font-family);
+    }
+    input:focus { outline: 3px solid color-mix(in srgb, var(--purple) 35%, transparent); border-color: var(--purple); }
+    .check { display: flex; gap: 10px; align-items: flex-start; margin: 14px 0; font-size: 13px; line-height: 1.55; color: var(--ink); }
+    .check input { margin-top: 3px; flex: 0 0 auto; }
+    .check a { color: var(--purple); text-decoration: underline; text-underline-offset: 3px; }
+    .turnstile-wrap { margin: 22px 0 8px; min-height: 65px; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 47px; padding: 0 22px; border: 1px solid var(--purple);
+      background: var(--purple); color: white;
+      font-family: var(--font-family); font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: background .18s ease;
+    }
+    .button:hover { background: var(--purple-dark); }
+    .button:disabled { opacity: .55; cursor: wait; }
+    .form-note { margin-top: 18px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+    .status {
+      display: none; margin-top: 22px; padding: 16px 18px;
+      border: 1px solid var(--line); background: var(--paper-deep); font-size: 14px; line-height: 1.7;
+    }
+    .status.show { display: block; }
+    .status.ok { border-color: color-mix(in srgb, var(--purple) 40%, var(--line)); }
+    .status.err { border-color: color-mix(in srgb, var(--rust) 50%, var(--line)); color: #5c2430; }
+    footer { padding: 24px 0 30px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; align-items: center; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 20px; }
+    .footer-links a:hover { color: var(--purple); }
+    @media (max-width: 600px) {
+      .container { width: calc(100% - 36px); }
+      .nav { min-height: 68px; }
+      .page { padding: 48px 0 68px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Ana menü">
+      <a class="brand" href="../" aria-label="Piaroute ana sayfa">
+        <img class="brand-logo" src="../assets/piaroute-logo.png" alt=""><span class="brand-name">Piaroute</span>
+      </a>
+      <a class="nav-cta" href="../#iletisim">İletişim <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="container">
+      <div class="eyebrow">Erken erişim listesi</div>
+      <h1>Listeye katıl</h1>
+      <p class="lead">Piaroute ile yoldaki çukur, kasis ve yol çalışmalarını işaretleyip rotada görebilirsin. Şimdilik sadece e-postanı bırak; davet hazır olunca biz yazarız.</p>
+
+      <form class="form-card" id="apply-form" novalidate>
+        <div class="field">
+          <label for="email">E-posta adresi</label>
+          <input id="email" name="email" type="email" autocomplete="email" required maxlength="160" placeholder="ornek@mail.com">
+          <span class="hint">Davet ve güncellemeler bu adrese gelir.</span>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" name="privacy_ok" id="privacy_ok" value="1" required>
+          <span><a href="aydinlatma.html" target="_blank" rel="noopener">Aydınlatma Metni</a>’ni okudum; e-posta adresimin erken erişim listesi için işlenmesini kabul ediyorum.</span>
+        </label>
+
+        <div style="position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden" aria-hidden="true">
+          <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <div class="turnstile-wrap" id="turnstile-wrap" hidden>
+          <div class="cf-turnstile" data-sitekey="TURNSTILE_SITE_KEY" data-theme="light"></div>
+        </div>
+
+        <button class="button" type="submit" id="submit-btn">Erken erişime katıl</button>
+        <div class="status" id="form-status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <a class="brand" href="../"><img class="brand-logo" src="../assets/piaroute-logo.png" alt=""><span class="brand-name">Piaroute</span></a>
+        <div class="footer-links">
+          <a href="../">Ana sayfa</a>
+          <a href="aydinlatma.html">Aydınlatma metni</a>
+          <a href="mailto:kadir@piaroute.com">E-posta</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var API_URL = "/api/apply";
+      var form = document.getElementById("apply-form");
+      var statusEl = document.getElementById("form-status");
+      var btn = document.getElementById("submit-btn");
+      var turnstileEl = document.querySelector(".cf-turnstile");
+      var turnstileWrap = document.getElementById("turnstile-wrap");
+      var turnstileKey = turnstileEl && turnstileEl.getAttribute("data-sitekey");
+      var turnstileEnabled = turnstileKey && turnstileKey !== "TURNSTILE_SITE_KEY" && turnstileKey.length > 10;
+      if (turnstileEnabled) turnstileWrap.hidden = false;
+
+      function showStatus(ok, text) {
+        statusEl.className = "status show " + (ok ? "ok" : "err");
+        statusEl.textContent = text;
+      }
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        statusEl.className = "status";
+        statusEl.textContent = "";
+
+        if (!form.privacy_ok.checked) {
+          showStatus(false, "Devam etmek için aydınlatma metnini kabul etmelisiniz.");
+          return;
+        }
+
+        var tokenInput = form.querySelector("[name='cf-turnstile-response']");
+        var token = tokenInput ? tokenInput.value : "";
+        if (turnstileEnabled && (!token || token.length < 10)) {
+          showStatus(false, "Bot koruması tamamlanmadı. Sayfayı yenileyip tekrar deneyin.");
+          return;
+        }
+
+        btn.disabled = true;
+        try {
+          var payload = {
+            email: form.email.value.trim().toLowerCase(),
+            privacy_ok: true,
+            website: form.website ? form.website.value : "",
+            turnstile_token: token
+          };
+
+          var res = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          var data = {};
+          try { data = await res.json(); } catch (_) {}
+
+          if (!res.ok) {
+            var errMsg = data.error;
+            if (errMsg && typeof errMsg === "object") {
+              errMsg = errMsg.message || errMsg.code || "";
+            }
+            if (!errMsg || typeof errMsg !== "string") {
+              errMsg = "Kayıt gönderilemedi. Lütfen biraz sonra tekrar deneyin.";
+            }
+            showStatus(false, errMsg);
+            if (window.turnstile) window.turnstile.reset();
+            btn.disabled = false;
+            return;
+          }
+
+          form.reset();
+          if (window.turnstile) window.turnstile.reset();
+          showStatus(true, "Erken erişim listesine katıldın. Davet hazır olunca bu e-posta adresine yazarız.");
+        } catch (err) {
+          showStatus(false, "Bağlantı hatası. İnternetinizi kontrol edip tekrar deneyin.");
+          if (window.turnstile) window.turnstile.reset();
+        }
+        btn.disabled = false;
+      });
+    })();
+  </script>
+</body>
+</html>

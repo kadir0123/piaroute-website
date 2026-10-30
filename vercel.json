@@ -5,8 +5,9 @@
     { "source": "/kayit/", "destination": "/waitlist/", "permanent": false },
     { "source": "/erken-erisim", "destination": "/waitlist/", "permanent": false },
     { "source": "/erken-erisim/", "destination": "/waitlist/", "permanent": false },
-    { "source": "/waitlist", "destination": "/kapali-test/", "permanent": false },
-    { "source": "/waitlist/", "destination": "/kapali-test/", "permanent": false }
+    { "source": "/kapali-test", "destination": "/waitlist/", "permanent": false },
+    { "source": "/kapali-test/", "destination": "/waitlist/", "permanent": false },
+    { "source": "/kapali-test/aydinlatma.html", "destination": "/waitlist/aydinlatma.html", "permanent": false }
   ],
   "headers": [
     {

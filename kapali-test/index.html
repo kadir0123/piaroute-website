@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f3ee">
-  <meta name="description" content="Piaroute waitlist. E-posta bırak, davet gelince haberin olsun.">
-  <meta property="og:title" content="Piaroute Waitlist">
-  <meta property="og:description" content="Yoldaki çukur ve kasisleri birlikte görünür kılıyoruz. Waitlist’e katıl — sadece e-posta yeter.">
+  <meta name="description" content="Piaroute erken erişim listesi. E-posta bırak, davet gelince haberin olsun.">
+  <meta property="og:title" content="Piaroute Erken Erişim Listesi">
+  <meta property="og:description" content="Yoldaki çukur ve kasisleri birlikte görünür kılıyoruz. Erken erişim listesine katıl — sadece e-posta yeter.">
   <meta property="og:type" content="website">
   <link rel="icon" type="image/png" href="../assets/piaroute-logo.png">
-  <title>Waitlist — Piaroute</title>
+  <title>Erken Erişim Listesi — Piaroute</title>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <style>
     :root {
@@ -45,10 +45,6 @@
     h1 { margin: 22px 0 16px; font: 400 clamp(34px, 5vw, 48px)/1.08 var(--font-family); letter-spacing: -.045em; }
     .lead { max-width: 520px; margin-bottom: 32px; color: var(--muted); font-size: 15px; line-height: 1.85; }
     .form-card { padding: 28px 0 0; border-top: 1px solid var(--ink); }
-    .form-card > h2 {
-      margin: 0 0 10px; font: 400 22px/1.25 var(--font-family); letter-spacing: -.03em;
-    }
-    .form-intro { margin: 0 0 22px; color: var(--muted); font-size: 13px; line-height: 1.7; }
     .field { margin-bottom: 20px; }
     label { display: block; margin-bottom: 7px; font-size: 12px; font-weight: 700; letter-spacing: .02em; }
     .hint { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; line-height: 1.6; }
@@ -101,14 +97,11 @@
 
   <main class="page">
     <div class="container">
-      <div class="eyebrow">Waitlist</div>
-      <h1>Waitlist’e katıl</h1>
+      <div class="eyebrow">Erken erişim listesi</div>
+      <h1>Listeye katıl</h1>
       <p class="lead">Piaroute ile yoldaki çukur, kasis ve yol çalışmalarını işaretleyip rotada görebilirsin. Şimdilik sadece e-postanı bırak; davet hazır olunca biz yazarız.</p>
 
       <form class="form-card" id="apply-form" novalidate>
-        <h2>E-posta</h2>
-        <p class="form-intro">Cihaz seçimi, Play onayı veya uzun form yok. Waitlist’e yazılır, sonraki adımı mail ile anlatırız.</p>
-
         <div class="field">
           <label for="email">E-posta adresi</label>
           <input id="email" name="email" type="email" autocomplete="email" required maxlength="160" placeholder="ornek@mail.com">
@@ -117,7 +110,7 @@
 
         <label class="check">
           <input type="checkbox" name="privacy_ok" id="privacy_ok" value="1" required>
-          <span><a href="aydinlatma.html" target="_blank" rel="noopener">Aydınlatma Metni</a>’ni okudum; e-posta adresimin waitlist için işlenmesini kabul ediyorum.</span>
+          <span><a href="aydinlatma.html" target="_blank" rel="noopener">Aydınlatma Metni</a>’ni okudum; e-posta adresimin erken erişim listesi için işlenmesini kabul ediyorum.</span>
         </label>
 
         <div style="position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden" aria-hidden="true">
@@ -128,8 +121,8 @@
           <div class="cf-turnstile" data-sitekey="TURNSTILE_SITE_KEY" data-theme="light"></div>
         </div>
 
-        <button class="button" type="submit" id="submit-btn">Waitlist’e ekle</button>
-        <p class="form-note">Android daveti hazır olduğunda aynı e-posta adresine yazarız. iPhone sırası da waitlist’ten yönetilir.</p>
+        <button class="button" type="submit" id="submit-btn">Listeye ekle</button>
+        <p class="form-note">Android daveti hazır olduğunda aynı e-posta adresine yazarız. iPhone sırası da listeden yönetilir.</p>
         <div class="status" id="form-status" role="status" aria-live="polite"></div>
       </form>
     </div>
@@ -215,7 +208,7 @@
 
           form.reset();
           if (window.turnstile) window.turnstile.reset();
-          showStatus(true, "Waitlist’e eklendin. Davet hazır olunca bu e-posta adresine yazarız.");
+          showStatus(true, "Listeye eklendin. Davet hazır olunca bu e-posta adresine yazarız.");
         } catch (err) {
           showStatus(false, "Bağlantı hatası. İnternetinizi kontrol edip tekrar deneyin.");
           if (window.turnstile) window.turnstile.reset();

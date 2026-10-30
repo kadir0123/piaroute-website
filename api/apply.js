@@ -162,7 +162,7 @@ module.exports = async function handler(req, res) {
     }
 
     const email = clean(body.email, 160).toLowerCase();
-    // Waitlist: sadece e-posta. Eski form alanları opsiyonel kalır.
+    // Erken erişim listesi (/waitlist): sadece e-posta. Eski form alanları opsiyonel kalır.
     let first_name = clean(body.first_name, 80);
     let last_name = clean(body.last_name, 80);
     if (!NAME_RE.test(first_name)) first_name = "Liste";

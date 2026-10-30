@@ -121,8 +121,7 @@
           <div class="cf-turnstile" data-sitekey="TURNSTILE_SITE_KEY" data-theme="light"></div>
         </div>
 
-        <button class="button" type="submit" id="submit-btn">Listeye ekle</button>
-        <p class="form-note">Android daveti hazır olduğunda aynı e-posta adresine yazarız. iPhone sırası da listeden yönetilir.</p>
+        <button class="button" type="submit" id="submit-btn">Erken erişime katıl</button>
         <div class="status" id="form-status" role="status" aria-live="polite"></div>
       </form>
     </div>
@@ -208,7 +207,7 @@
 
           form.reset();
           if (window.turnstile) window.turnstile.reset();
-          showStatus(true, "Listeye eklendin. Davet hazır olunca bu e-posta adresine yazarız.");
+          showStatus(true, "Erken erişim listesine katıldın. Davet hazır olunca bu e-posta adresine yazarız.");
         } catch (err) {
           showStatus(false, "Bağlantı hatası. İnternetinizi kontrol edip tekrar deneyin.");
           if (window.turnstile) window.turnstile.reset();

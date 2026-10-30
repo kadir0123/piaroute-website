@@ -161,31 +161,23 @@ module.exports = async function handler(req, res) {
       return;
     }
 
-    const first_name = clean(body.first_name, 80);
-    const last_name = clean(body.last_name, 80);
     const email = clean(body.email, 160).toLowerCase();
-    const device = String(body.device || "").toLowerCase();
+    // Waitlist: sadece e-posta. Eski form alanları opsiyonel kalır.
+    let first_name = clean(body.first_name, 80);
+    let last_name = clean(body.last_name, 80);
+    if (!NAME_RE.test(first_name)) first_name = "Liste";
+    if (!NAME_RE.test(last_name)) last_name = "Uyesi";
+    let device = String(body.device || "android").toLowerCase();
+    if (device !== "android" && device !== "ios") device = "android";
     const play_email_same = !!body.play_email_same;
     const feedback_interview = !!body.feedback_interview;
-    const product_updates = !!body.product_updates;
+    const product_updates =
+      body.product_updates === undefined ? true : !!body.product_updates;
     const privacy_ok = !!body.privacy_ok;
     const turnstile_token = String(body.turnstile_token || "");
 
-    if (!NAME_RE.test(first_name) || !NAME_RE.test(last_name) || !EMAIL_RE.test(email)) {
-      json(res, 400, { error: "Ad, soyad ve geçerli e-posta gerekli." }, origin);
-      return;
-    }
-    if (device !== "android" && device !== "ios") {
-      json(res, 400, { error: "Cihaz seçimi geçersiz." }, origin);
-      return;
-    }
-    if (device === "android" && !play_email_same) {
-      json(
-        res,
-        400,
-        { error: "Android için Play hesabı e-posta onayını işaretleyin." },
-        origin,
-      );
+    if (!EMAIL_RE.test(email)) {
+      json(res, 400, { error: "Geçerli bir e-posta gerekli." }, origin);
       return;
     }
     if (!privacy_ok) {
@@ -252,8 +244,7 @@ module.exports = async function handler(req, res) {
         res,
         409,
         {
-          error:
-            "Bu e-posta ile zaten başvuru var. Durumu e-posta ile takip edebilirsiniz.",
+          error: "Bu e-posta zaten listede. Davet gelince yazarız.",
         },
         origin,
       );

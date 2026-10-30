@@ -1,8 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
-    { "source": "/kayit", "destination": "/kapali-test/", "permanent": false },
-    { "source": "/kayit/", "destination": "/kapali-test/", "permanent": false }
+    { "source": "/kayit", "destination": "/waitlist/", "permanent": false },
+    { "source": "/kayit/", "destination": "/waitlist/", "permanent": false },
+    { "source": "/erken-erisim", "destination": "/waitlist/", "permanent": false },
+    { "source": "/erken-erisim/", "destination": "/waitlist/", "permanent": false },
+    { "source": "/waitlist", "destination": "/kapali-test/", "permanent": false },
+    { "source": "/waitlist/", "destination": "/kapali-test/", "permanent": false }
   ],
   "headers": [
     {

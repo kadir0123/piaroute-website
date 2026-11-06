@@ -7,7 +7,10 @@
     { "source": "/erken-erisim/", "destination": "/waitlist/", "permanent": false },
     { "source": "/kapali-test", "destination": "/waitlist/", "permanent": false },
     { "source": "/kapali-test/", "destination": "/waitlist/", "permanent": false },
-    { "source": "/kapali-test/aydinlatma.html", "destination": "/waitlist/aydinlatma.html", "permanent": false }
+    { "source": "/kapali-test/aydinlatma.html", "destination": "/waitlist/aydinlatma.html", "permanent": false },
+    { "source": "/privacy", "destination": "/gizlilik/", "permanent": false },
+    { "source": "/privacy/", "destination": "/gizlilik/", "permanent": false },
+    { "source": "/gizlilik", "destination": "/gizlilik/", "permanent": false }
   ],
   "headers": [
     {

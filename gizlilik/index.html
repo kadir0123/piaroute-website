@@ -119,6 +119,7 @@
       <ul>
         <li><strong>Google Firebase:</strong> Authentication, Cloud Firestore, Analytics, Crashlytics</li>
         <li><strong>ImgBB:</strong> yüklenen (bulanıklaştırılmış) fotoğrafların barındırılması; silme bağlantıları uygulama içinde tutulabilir</li>
+        <li><strong>Telegram Bot API:</strong> kurucu / operatör bildirim kutusu (tehlike özeti, isteğe bağlı fotoğraf URL’si veya eğitim özeti). Kullanıcıya açık sohbet değildir; mesajlar yapılandırılmış bot üzerinden operatör sohbetine gider</li>
         <li><strong>Piaroute yapay zekâ modeli:</strong> çukur / yol tehlikesi tespiti için kendi modelimiz; çıkarım cihaz üzerinde veya bizim kontrolümüzdeki altyapıda yapılır. Fotoğraflar Google Gemini veya benzeri üçüncü taraf üretken yapay zekâ API’lerine gönderilmez</li>
         <li><strong>Harita / geocode sağlayıcıları:</strong> OpenStreetMap karoları; Photon ve Nominatim (OSM) arama / ters geocode; yapılandırmaya göre MapTiler karoları</li>
         <li><strong>Vercel / Neon:</strong> yalnızca <em>web sitesi</em> (ör. erken erişim listesi) için; mobil uygulama hesap verisi bu altyapıda tutulmaz</li>
@@ -126,7 +127,7 @@
 
       <h2 id="yurt-disi">6. Yurt dışı aktarım (KVKK m.9)</h2>
       <p>
-        Yukarıdaki sağlayıcıların bir kısmı (özellikle Google Firebase ve ImgBB) verileri
+        Yukarıdaki sağlayıcıların bir kısmı (özellikle Google Firebase, ImgBB ve Telegram) verileri
         <strong>Türkiye dışında</strong> bulunan sunucularda işleyebilir veya yurt dışına aktarılmasına yol açabilir.
         Veri sorumlusu olarak bu aktarımlarda sağlayıcıların sunduğu sözleşmesel ve uyum mekanizmalarına (ör. Google Cloud / Firebase veri işleme şartları, sağlayıcı gizlilik politikaları) dayanılır.
       </p>

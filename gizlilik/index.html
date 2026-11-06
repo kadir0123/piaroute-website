@@ -96,7 +96,7 @@
         <li><strong>Kimlik / hesap:</strong> Firebase Auth kullanıcı kimliği (UID), anonim oturum UID’si; e-posta ile veya Google / Apple ile giriş yapıldığında e-posta ve (sağlanırsa) görünen ad</li>
         <li><strong>Profil:</strong> isteğe bağlı ad / görünen ad, e-posta, telefon numarası (profil alanları; buluta senkronize edilebilir)</li>
         <li><strong>Konum:</strong> kesin / yaklaşık GPS konumu (harita, navigasyon, tehlike pini, arama bağlamı)</li>
-        <li><strong>Fotoğraflar:</strong> kullanıcının yüklediği yol / tehlike fotoğrafları (yeniden kodlanmış JPEG; EXIF GPS temizlenmeye çalışılır; konum ayrı alanlarda tutulur)</li>
+        <li><strong>Fotoğraflar:</strong> kullanıcının yüklediği yol / tehlike fotoğrafları (yeniden kodlanmış JPEG; EXIF GPS temizlenmeye çalışılır; konum ayrı alanlarda tutulur); bunlar Piaroute’un kendi yapay zekâsı ile operatör kontrolündeki bilgisayar / sunucuda taranabilir</li>
         <li><strong>Tehlike / katkı verisi:</strong> pin konumu, tür, zaman damgası, açıklama, topluluk oyları / onayları, eğitim / ham katkı kayıtları</li>
         <li><strong>Analitik olaylar:</strong> Firebase Analytics üzerinden uygulama açılışı, arama, rota başlatma gibi ürün kullanım olayları</li>
         <li><strong>Çökme / hata verisi:</strong> Firebase Crashlytics üzerinden çökme raporları, cihaz / uygulama sürümü ve ilgili teknik günlükler</li>
@@ -109,7 +109,7 @@
         <li>Hesap oluşturma, oturum ve profil yönetimi — KVKK m.5/2(c) (sözleşmenin ifası) ve/veya m.5/1 (açık rıza gereken hallerde)</li>
         <li>Harita, navigasyon, adres arama / geocode — m.5/2(c); konum için cihaz izni + ilgili rıza / meşru menfaat çerçevesi</li>
         <li>Tehlike bildirimi, topluluk doğrulama / oy, harita paylaşımı — m.5/2(c); fotoğraf ve eğitim kullanımı için açık rıza (uygulama içi rıza diyaloğu)</li>
-        <li>Çukur / yol tehlikesi görüntü analizi: kendi yapay zekâ modelimiz (cihaz veya bizim kontrolümüzdeki altyapı); fotoğraflar Google Gemini’ye gönderilmez — m.5/2(c); eğitim / model iyileştirme için açık rıza m.5/1</li>
+        <li>Çukur / yol tehlikesi görüntü analizi: gönderilen fotoğraflar Piaroute’un kendi yapay zekâ modeli ile, operatörün kontrolündeki bilgisayar / sunucu altyapısında işlenebilir; Google Gemini veya benzeri üçüncü taraf üretken yapay zekâ kullanılmaz — m.5/2(c); eğitim / model iyileştirme için açık rıza m.5/1</li>
         <li>Ürün iyileştirme, kararlılık: Analytics ve Crashlytics — m.5/2(f) meşru menfaat ve/veya m.5/1 (mağaza / ürün politikasına göre)</li>
         <li>Kötüye kullanımın önlenmesi, destek taleplerinin yanıtlanması — m.5/2(f); yasal yükümlülük varsa m.5/2(ç)</li>
       </ul>
@@ -119,8 +119,8 @@
       <ul>
         <li><strong>Google Firebase:</strong> Authentication, Cloud Firestore, Analytics, Crashlytics</li>
         <li><strong>ImgBB:</strong> yüklenen (bulanıklaştırılmış) fotoğrafların barındırılması; silme bağlantıları uygulama içinde tutulabilir</li>
-        <li><strong>Telegram Bot API:</strong> kurucu / operatör bildirim kutusu (tehlike özeti, isteğe bağlı fotoğraf URL’si veya eğitim özeti). Kullanıcıya açık sohbet değildir; mesajlar yapılandırılmış bot üzerinden operatör sohbetine gider</li>
-        <li><strong>Piaroute yapay zekâ modeli:</strong> çukur / yol tehlikesi tespiti için kendi modelimiz; çıkarım cihaz üzerinde veya bizim kontrolümüzdeki altyapıda yapılır. Fotoğraflar Google Gemini veya benzeri üçüncü taraf üretken yapay zekâ API’lerine gönderilmez</li>
+        <li><strong>Telegram Bot API:</strong> yalnızca operatör bildirimi (tehlike özeti, isteğe bağlı fotoğraf URL’si veya eğitim özeti). Yapay zekâ motoru değildir; görüntü analizi Telegram’da yapılmaz. Kullanıcıya açık sohbet değildir; mesajlar yapılandırılmış bot üzerinden operatör sohbetine gider</li>
+        <li><strong>Piaroute yapay zekâ modeli:</strong> çukur / yol tehlikesi tespiti için kendi modelimiz; gönderilen fotoğraflar operatörün kontrolündeki bilgisayar / sunucu altyapısında (ve yapılandırmaya göre cihaz üzerinde) işlenebilir. Fotoğraflar Google Gemini veya benzeri üçüncü taraf üretken yapay zekâ API’lerine gönderilmez</li>
         <li><strong>Harita / geocode sağlayıcıları:</strong> OpenStreetMap karoları; Photon ve Nominatim (OSM) arama / ters geocode; yapılandırmaya göre MapTiler karoları</li>
         <li><strong>Vercel / Neon:</strong> yalnızca <em>web sitesi</em> (ör. erken erişim listesi) için; mobil uygulama hesap verisi bu altyapıda tutulmaz</li>
       </ul>
@@ -159,7 +159,7 @@
 
       <h2 id="riza-silme">9. Rızayı geri çekme ve hesap / veri silme</h2>
       <ul>
-        <li><strong>Fotoğraf / eğitim rızası:</strong> Hesap ekranından eğitim / gizlilik rızasını geri çekebilirsiniz; rıza olmadan yeni fotoğraf yükleme / ilgili akışlar çalışmaz. Görüntü analizi kendi yapay zekâ modelimizle (cihaz veya bizim kontrolümüzdeki altyapı) yapılır; üçüncü taraf üretken yapay zekâ (ör. Google Gemini) kullanılmaz.</li>
+        <li><strong>Fotoğraf / eğitim rızası:</strong> Hesap ekranından eğitim / gizlilik rızasını geri çekebilirsiniz; rıza olmadan yeni fotoğraf yükleme / ilgili akışlar çalışmaz. Görüntü analizi Piaroute’un kendi modeliyle, operatör kontrolündeki bilgisayar / sunucu altyapısında (ve yapılandırmaya göre cihazda) yapılır; Telegram yalnızca operatör bildirimi içindir; üçüncü taraf üretken yapay zekâ (ör. Google Gemini) kullanılmaz.</li>
         <li><strong>Hesap silme:</strong> Hesabım → Hesabı ve yerel verileri sil: bu cihazdaki oturum ve tercihler, henüz onay almamış kendi pinleriniz ve kendi eğitim / ham kayıtlarınız silinmeye çalışılır.</li>
         <li><strong>Onaylı topluluk pinleri:</strong> otomatik silinmez; <a href="mailto:kadir@piaroute.com">kadir@piaroute.com</a> ile talep edin.</li>
         <li><strong>ImgBB fotoğrafları:</strong> Hesabım → Yüklenen fotoğrafları sil bölümündeki sağlayıcı silme sayfasını kullanın. Bağlantı yoksa destek e-postası yazın. Talebinizde uygulama adını ve ilgili bildirim bilgisini belirtin; şifre veya doğrulama kodu göndermeyin.</li>

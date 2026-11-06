@@ -109,7 +109,7 @@
         <li>Hesap oluşturma, oturum ve profil yönetimi — KVKK m.5/2(c) (sözleşmenin ifası) ve/veya m.5/1 (açık rıza gereken hallerde)</li>
         <li>Harita, navigasyon, adres arama / geocode — m.5/2(c); konum için cihaz izni + ilgili rıza / meşru menfaat çerçevesi</li>
         <li>Tehlike bildirimi, topluluk doğrulama / oy, harita paylaşımı — m.5/2(c); fotoğraf ve eğitim kullanımı için açık rıza (uygulama içi rıza diyaloğu)</li>
-        <li>İsteğe bağlı bulut görüntü analizi (Google Gemini) — yalnızca kullanıcı onayı ile; m.5/1</li>
+        <li>Çukur / yol tehlikesi görüntü analizi: kendi yapay zekâ modelimiz (cihaz veya bizim kontrolümüzdeki altyapı); fotoğraflar Google Gemini’ye gönderilmez — m.5/2(c); eğitim / model iyileştirme için açık rıza m.5/1</li>
         <li>Ürün iyileştirme, kararlılık: Analytics ve Crashlytics — m.5/2(f) meşru menfaat ve/veya m.5/1 (mağaza / ürün politikasına göre)</li>
         <li>Kötüye kullanımın önlenmesi, destek taleplerinin yanıtlanması — m.5/2(f); yasal yükümlülük varsa m.5/2(ç)</li>
       </ul>
@@ -119,14 +119,14 @@
       <ul>
         <li><strong>Google Firebase:</strong> Authentication, Cloud Firestore, Analytics, Crashlytics</li>
         <li><strong>ImgBB:</strong> yüklenen (bulanıklaştırılmış) fotoğrafların barındırılması; silme bağlantıları uygulama içinde tutulabilir</li>
-        <li><strong>Google Gemini:</strong> yalnızca bulut analizi açıkken ve kullanıcı onayı varken fotoğraf analizi</li>
+        <li><strong>Piaroute yapay zekâ modeli:</strong> çukur / yol tehlikesi tespiti için kendi modelimiz; çıkarım cihaz üzerinde veya bizim kontrolümüzdeki altyapıda yapılır. Fotoğraflar Google Gemini veya benzeri üçüncü taraf üretken yapay zekâ API’lerine gönderilmez</li>
         <li><strong>Harita / geocode sağlayıcıları:</strong> OpenStreetMap karoları; Photon ve Nominatim (OSM) arama / ters geocode; yapılandırmaya göre MapTiler karoları</li>
         <li><strong>Vercel / Neon:</strong> yalnızca <em>web sitesi</em> (ör. erken erişim listesi) için; mobil uygulama hesap verisi bu altyapıda tutulmaz</li>
       </ul>
 
       <h2 id="yurt-disi">6. Yurt dışı aktarım (KVKK m.9)</h2>
       <p>
-        Yukarıdaki sağlayıcıların bir kısmı (özellikle Google Firebase / Gemini ve ImgBB) verileri
+        Yukarıdaki sağlayıcıların bir kısmı (özellikle Google Firebase ve ImgBB) verileri
         <strong>Türkiye dışında</strong> bulunan sunucularda işleyebilir veya yurt dışına aktarılmasına yol açabilir.
         Veri sorumlusu olarak bu aktarımlarda sağlayıcıların sunduğu sözleşmesel ve uyum mekanizmalarına (ör. Google Cloud / Firebase veri işleme şartları, sağlayıcı gizlilik politikaları) dayanılır.
       </p>
@@ -158,7 +158,7 @@
 
       <h2 id="riza-silme">9. Rızayı geri çekme ve hesap / veri silme</h2>
       <ul>
-        <li><strong>Fotoğraf / eğitim rızası:</strong> Hesap ekranından eğitim / gizlilik rızasını geri çekebilirsiniz; rıza olmadan yeni fotoğraf yükleme / ilgili akışlar çalışmaz. Bulut (Gemini) analizi ayrıca onay ister; onay yoksa yalnızca cihaz içi analiz çalışabilir.</li>
+        <li><strong>Fotoğraf / eğitim rızası:</strong> Hesap ekranından eğitim / gizlilik rızasını geri çekebilirsiniz; rıza olmadan yeni fotoğraf yükleme / ilgili akışlar çalışmaz. Görüntü analizi kendi yapay zekâ modelimizle (cihaz veya bizim kontrolümüzdeki altyapı) yapılır; üçüncü taraf üretken yapay zekâ (ör. Google Gemini) kullanılmaz.</li>
         <li><strong>Hesap silme:</strong> Hesabım → Hesabı ve yerel verileri sil: bu cihazdaki oturum ve tercihler, henüz onay almamış kendi pinleriniz ve kendi eğitim / ham kayıtlarınız silinmeye çalışılır.</li>
         <li><strong>Onaylı topluluk pinleri:</strong> otomatik silinmez; <a href="mailto:kadir@piaroute.com">kadir@piaroute.com</a> ile talep edin.</li>
         <li><strong>ImgBB fotoğrafları:</strong> Hesabım → Yüklenen fotoğrafları sil bölümündeki sağlayıcı silme sayfasını kullanın. Bağlantı yoksa destek e-postası yazın. Talebinizde uygulama adını ve ilgili bildirim bilgisini belirtin; şifre veya doğrulama kodu göndermeyin.</li>

@@ -62,7 +62,7 @@
   <main class="page">
     <div class="container">
       <h1>Uygulama Gizlilik Politikası ve Aydınlatma Metni</h1>
-      <p class="meta">6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) m.10 uyarınca · Son güncelleme: 6 Kasım 2026</p>
+      <p class="meta">6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”) m.10 uyarınca · Son güncelleme: 22 Kasım 2026</p>
       <p class="note">
         Bu metin <strong>Piaroute mobil uygulaması</strong> (navigasyon + yol tehlikesi / hazard haritası) için geçerlidir.
         Web sitesindeki erken erişim listesi ayrıdır:
@@ -119,8 +119,9 @@
       <ul>
         <li><strong>Google Firebase:</strong> Authentication, Cloud Firestore, Analytics, Crashlytics</li>
         <li><strong>ImgBB:</strong> yüklenen (bulanıklaştırılmış) fotoğrafların barındırılması; silme bağlantıları uygulama içinde tutulabilir</li>
-        <li><strong>Telegram Bot API:</strong> yalnızca operatör bildirimi (tehlike özeti, isteğe bağlı fotoğraf URL’si veya eğitim özeti). Yapay zekâ motoru değildir; görüntü analizi Telegram’da yapılmaz. Kullanıcıya açık sohbet değildir; mesajlar yapılandırılmış bot üzerinden operatör sohbetine gider</li>
-        <li><strong>Piaroute yapay zekâ modeli:</strong> çukur / yol tehlikesi tespiti için kendi modelimiz; gönderilen fotoğraflar operatörün kontrolündeki bilgisayar / sunucu altyapısında (ve yapılandırmaya göre cihaz üzerinde) işlenebilir. Fotoğraflar Google Gemini veya benzeri üçüncü taraf üretken yapay zekâ API’lerine gönderilmez</li>
+        <li><strong>Operatör bilgisayarı:</strong> uygulama Telegram’a bağlanmaz ve bot anahtarı taşımaz. Tehlike kaydı operatörün kendi bilgisayarındaki sunucuya düşünce, aynı anda kendi modeliyle işlenir ve operatöre Telegram bildirimi gidebilir</li>
+        <li><strong>Telegram Bot API:</strong> yalnızca bu operatör bildirimi (tehlike özeti, isteğe bağlı fotoğraf bağlantısı). Yapay zekâ motoru değildir; görüntü analizi Telegram’da yapılmaz. Kullanıcıyla sohbet açılmaz</li>
+        <li><strong>Piaroute yapay zekâ modeli:</strong> çukur / yol tehlikesi tespiti için kendi modelimiz; fotoğraflar operatörün kontrolündeki bilgisayarda işlenir. Google Gemini veya benzeri üçüncü taraf üretken yapay zekâ API’sine gönderilmez</li>
         <li><strong>Harita / geocode sağlayıcıları:</strong> OpenStreetMap karoları; Photon ve Nominatim (OSM) arama / ters geocode; yapılandırmaya göre MapTiler karoları</li>
         <li><strong>Vercel / Neon:</strong> yalnızca <em>web sitesi</em> (ör. erken erişim listesi) için; mobil uygulama hesap verisi bu altyapıda tutulmaz</li>
       </ul>
@@ -144,6 +145,8 @@
         <li><strong>Tehlike pinleri:</strong> topluluk haritası için gerekli olduğu sürece; henüz onay almamış kendi pinleriniz hesap silmede kaldırılabilir. En az bir topluluk onayı almış pinler diğer sürücüler için kalabilir — bunların silinmesi destek e-postası ile talep edilir</li>
         <li><strong>Eğitim / katkı kayıtları:</strong> model iyileştirme amacı devam ettiği ve hesabınız durduğu sürece; hesap silmede kendi kayıtlarınız silinmeye çalışılır</li>
         <li><strong>ImgBB fotoğrafları:</strong> sağlayıcıda URL canlı kaldığı sürece; hesap silme ImgBB’deki dosyayı otomatik silmez — uygulama içi silme bağlantısı veya destek gerekir</li>
+        <li><strong>Operatör bilgisayarındaki kopya:</strong> kayıt düşünce fotoğraf ve konum, model ve operatör bildirimi için bu bilgisayarda tutulabilir. Silme e-postası bu kopyayı da kapsar; ayrıca bir bulut yedeği vaat edilmez</li>
+        <li><strong>Telegram bildirimi:</strong> operatör sohbetinde kalan mesaj, hesap silmeyle otomatik kalkmaz. Silme talebinde operatör ilgili mesajı da siler</li>
         <li><strong>Analytics / Crashlytics:</strong> Google’ın ürün saklama ayarlarına ve makul işletme ihtiyacına göre</li>
         <li><strong>Yasal saklama:</strong> zorunlu tutulması gereken kayıtlar ilgili süre boyunca</li>
       </ul>
@@ -159,7 +162,8 @@
 
       <h2 id="riza-silme">9. Rızayı geri çekme ve hesap / veri silme</h2>
       <ul>
-        <li><strong>Fotoğraf / eğitim rızası:</strong> Hesap ekranından eğitim / gizlilik rızasını geri çekebilirsiniz; rıza olmadan yeni fotoğraf yükleme / ilgili akışlar çalışmaz. Görüntü analizi Piaroute’un kendi modeliyle, operatör kontrolündeki bilgisayar / sunucu altyapısında (ve yapılandırmaya göre cihazda) yapılır; Telegram yalnızca operatör bildirimi içindir; üçüncü taraf üretken yapay zekâ (ör. Google Gemini) kullanılmaz.</li>
+        <li><strong>Fotoğraf / eğitim rızası:</strong> Hesap ekranından eğitim / gizlilik rızasını geri çekebilirsiniz; rıza olmadan yeni fotoğraf yükleme / ilgili akışlar çalışmaz. Uygulama Telegram’a bağlanmaz. Görüntü analizi, kayıt operatör bilgisayarına düşünce Piaroute’un kendi modeliyle yapılır. Telegram yalnızca o andaki operatör bildirimidir. Google Gemini kullanılmaz.</li>
+        <li><strong>Operatör bilgisayarı ve Telegram:</strong> silme talebinde bu kopya ve ilgili operatör mesajı da temizlenir. Şifre veya doğrulama kodu göndermeyin.</li>
         <li><strong>Hesap silme:</strong> Hesabım → Hesabı ve yerel verileri sil: bu cihazdaki oturum ve tercihler, henüz onay almamış kendi pinleriniz ve kendi eğitim / ham kayıtlarınız silinmeye çalışılır.</li>
         <li><strong>Onaylı topluluk pinleri:</strong> otomatik silinmez; <a href="mailto:kadir@piaroute.com">kadir@piaroute.com</a> ile talep edin.</li>
         <li><strong>ImgBB fotoğrafları:</strong> Hesabım → Yüklenen fotoğrafları sil bölümündeki sağlayıcı silme sayfasını kullanın. Bağlantı yoksa destek e-postası yazın. Talebinizde uygulama adını ve ilgili bildirim bilgisini belirtin; şifre veya doğrulama kodu göndermeyin.</li>

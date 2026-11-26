@@ -91,7 +91,7 @@
       <h2 id="islenen-veriler">3. İşlenen kişisel veriler</h2>
       <p>Uygulamanın bugünkü veri akışına göre işlenebilen kategoriler:</p>
       <ul>
-        <li><strong>Hesap:</strong> e-posta ve şifre. Şifre sunucuda tek yönlü saklanır. Google veya Apple ile giriş yoktur. Telefon numarası istenmez. İsteğe bağlı ad tutulabilir.</li>
+        <li><strong>Hesap:</strong> e-posta ve şifre. Şifre sunucuda tek yönlü saklanır. Şifre yenileme isteğinde bu adrese bir bağlantı gönderilir. Google veya Apple ile giriş yoktur. Telefon numarası istenmez. İsteğe bağlı ad tutulabilir.</li>
         <li><strong>Konum:</strong> kesin veya yaklaşık GPS konumu (harita, navigasyon, tehlike pini, arama).</li>
         <li><strong>Fotoğraflar:</strong> yüklenen yol fotoğrafları. Yeniden kodlanmış JPEG olarak Türkiye’deki sunucunun diskinde saklanır. EXIF konum temizlenmeye çalışılır; bildirim konumu ayrı alanda durur. Yüklemeden önce plaka bandı ve yüz bölgesi kaba olarak bulanıklaştırılır. Bu, tam bir yüz veya plaka tanıma değildir. Plaka, yüz veya üçüncü kişi içeren bir fotoğraf <a href="mailto:kadir@piaroute.com">kadir@piaroute.com</a> adresine bildirilirse kayıt kaldırılır.</li>
         <li><strong>Tehlike ve katkı:</strong> pin konumu, tür, zaman, açıklama, topluluk onayları, topluluk şikayeti, ham tespit ve kalite kaydı, marka veya dükkan pini.</li>
@@ -102,6 +102,7 @@
       <h2 id="amaclar">4. İşleme amaçları ve hukuki sebepler</h2>
       <ul>
         <li>Hesap, oturum, harita, navigasyon, adres arama ve konum — KVKK m.5/2(c) sözleşmenin ifası. Cihazın konum izni, işletim sisteminin izin ekranıdır. Konumun işlenme sebebi bu metindeki hukuki sebeplerdir.</li>
+        <li>Şifre yenileme — KVKK m.5/2(c) sözleşmenin ifası. Bağlantının özeti Türkiye’deki sunucuda 30 dakika tutulur.</li>
         <li>Tehlike bildirimi, topluluk doğrulama ve oy — KVKK m.5/2(c) sözleşmenin ifası.</li>
         <li>Fotoğrafların yapay zekâ modelini eğitmek için kullanılması — yalnızca KVKK m.5/1 açık rıza. Fotoğraf, operatörün kendi bilgisayarındaki Piaroute modeliyle işlenebilir.</li>
         <li>Kötüye kullanımın önlenmesi ve destek taleplerinin yanıtlanması — m.5/2(f); yasal yükümlülük varsa m.5/2(ç).</li>
@@ -114,7 +115,7 @@
         <li><strong>Harita görseli:</strong> telefon <strong>https://www.piaroute.com</strong> adresinden ister. Görsel, İstanbul’daki karo makinesinden gelir.</li>
         <li><strong>Adres ve yer araması, hız sınırı, kamera ve rota:</strong> telefon <strong>https://www.piaroute.com</strong> adresinden ister. Hesaplama İstanbul’daki harita makinesinde yapılır.</li>
         <li><strong>Operatör bilgisayarı:</strong> kayıt, operatörün kendi bilgisayarındaki modelle işlenebilir.</li>
-        <li><strong>E-posta:</strong> destek ve KVKK yazışması <strong>kadir@piaroute.com</strong> adresine gider. Bu kutunun hizmeti Zoho’dur, sunucuları Avrupa Birliği’ndedir.</li>
+        <li><strong>E-posta:</strong> destek ve KVKK yazışması <strong>kadir@piaroute.com</strong> adresine gider. Bu kutunun hizmeti Zoho’dur, sunucuları Avrupa Birliği’ndedir. Şifre yenileme postası İstanbul’daki sunucudan, yazdığınız adrese çıkar ve alıcının kendi e-posta hizmetine gider.</li>
         <li><strong>Harita paylaşım bağlantısı:</strong> bir pini paylaşmayı siz seçerseniz açılan bağlantı openstreetmap.org adresine, o noktanın koordinatıyla gider. Bu, hesap kaydı değildir. Paylaşmazsanız bu istek oluşmaz.</li>
       </ul>
 
@@ -128,17 +129,19 @@
         www.piaroute.com üzerinden İstanbul’daki harita makinesine gider.
         Destek ve KVKK yazışması <strong>kadir@piaroute.com</strong> adresine gelir.
         Bu kutunun hizmeti Zoho’dur ve sunucuları Avrupa Birliği’ndedir.
+        Şifre yenileme postası, yazdığınız adresin e-posta hizmetine gider.
+        Bağlantı www.piaroute.com üzerinde açılır. Bağlantının özeti Türkiye’de kalır.
         Pin paylaşımını siz açarsanız tarayıcınız, koordinatı openstreetmap.org adresine götürür.
         Bu, sizin açtığınız bağlantıdır.
       </p>
       <p>
         Harita ve rota hesaplaması İstanbul’dadır.
-        Yukarıdaki posta kutusu ve sizin açtığınız paylaşım bağlantısı bu saklamanın dışındadır.
+        Yukarıdaki posta kutusu, şifre yenileme postası ve sizin açtığınız paylaşım bağlantısı bu saklamanın dışındadır.
       </p>
 
       <h2 id="saklama">7. Saklama süreleri</h2>
       <ul>
-        <li><strong>Hesap:</strong> hesap durduğu sürece. Silme isteğinden sonra Türkiye’deki hesap, oturum ve profil kaydı kaldırılır.</li>
+        <li><strong>Hesap:</strong> hesap durduğu sürece. Silme isteğinden sonra Türkiye’deki hesap, oturum ve profil kaydı kaldırılır. Şifre yenileme bağlantısının özeti 30 dakika tutulur, sonra düşer.</li>
         <li><strong>Onaysız pin ve fotoğrafı:</strong> hesap silmede Türkiye’deki sunucudan kaldırılır.</li>
         <li><strong>Onaylı topluluk pinleri:</strong> hesabınızla bağı koparılarak haritada kalır. Bağı koparmak konum ve zamanı silmez. Bu birleşim, yukarıda yazıldığı gibi bir kişiyi çağrıştırabilir.</li>
         <li><strong>Onay ve şikayet:</strong> verdiğiniz onay, pin üzerindeki sayıda kalır. Onayı hesabınıza bağlayan kayıt silinir. Şikayet kaydı kalır, üzerindeki hesap işareti silinir.</li>

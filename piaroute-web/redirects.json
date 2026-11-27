@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/kayit", "destination": "/kapali-test/", "permanent": false },
+    { "source": "/kayit/", "destination": "/kapali-test/", "permanent": false }
+  ]
+}

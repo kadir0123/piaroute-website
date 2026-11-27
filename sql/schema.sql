@@ -13,8 +13,11 @@ CREATE TABLE IF NOT EXISTS applications (
   status TEXT NOT NULL DEFAULT 'pending'
     CHECK (status IN ('pending', 'approved', 'invited', 'declined')),
   notes TEXT,
-  ip_hash TEXT
+  ip_hash TEXT,
+  welcome_sent_at TIMESTAMPTZ
 );
+
+ALTER TABLE applications ADD COLUMN IF NOT EXISTS welcome_sent_at TIMESTAMPTZ;
 
 CREATE UNIQUE INDEX IF NOT EXISTS applications_email_uq
   ON applications (LOWER(email));

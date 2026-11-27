@@ -1,0 +1,2 @@
+CRON_TZ=Europe/Istanbul
+15 4 * * 0 root /usr/local/sbin/piaroute-tile-preseed.sh >> /var/log/piaroute-tile-preseed.log 2>&1

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Şifre yenile — Piaroute</title>
+  <style>
+    :root { color-scheme: light; --paper: #f7f5f0; --ink: #292533; --muted: #686471; --line: #ddd8e4; --purple: #8b45d3; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.6 Georgia, "Times New Roman", serif; }
+    main { width: min(420px, calc(100% - 40px)); margin: 64px auto; }
+    h1 { font: 400 32px/1.2 Georgia, serif; margin: 0 0 12px; }
+    p, label { color: var(--muted); font-size: 14px; }
+    input { width: 100%; margin: 8px 0 14px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; font: inherit; }
+    button { width: 100%; padding: 12px; border: 0; border-radius: 10px; background: var(--purple); color: white; font: inherit; cursor: pointer; }
+    button:disabled { opacity: .6; }
+    .msg { margin-top: 14px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Şifre yenile</h1>
+    <p id="lead">E-postadaki bağlantı 30 dakika geçerlidir. Yeni şifren en az 6 karakter olsun.</p>
+    <form id="form">
+      <label for="password">Yeni şifre</label>
+      <input id="password" name="password" type="password" minlength="6" maxlength="200" required autocomplete="new-password">
+      <button id="send" type="submit">Şifreyi kaydet</button>
+    </form>
+    <p class="msg" id="msg"></p>
+  </main>
+  <script>
+    var params = new URLSearchParams(location.search);
+    var token = params.get("token") || "";
+    var form = document.getElementById("form");
+    var msg = document.getElementById("msg");
+    if (!/^[0-9a-f]{64}$/i.test(token)) {
+      form.hidden = true;
+      document.getElementById("lead").textContent = "Bu sayfa, şifre yenileme e-postasındaki bağlantıyla açılır.";
+    }
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      var button = document.getElementById("send");
+      var password = document.getElementById("password").value;
+      button.disabled = true;
+      msg.textContent = "";
+      fetch("/api/auth/reset", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ token: token, password: password })
+      }).then(function (response) {
+        return response.json().then(function (body) {
+          return { ok: response.ok, body: body };
+        });
+      }).then(function (result) {
+        if (result.ok) {
+          form.hidden = true;
+          msg.textContent = "Şifre yenilendi. Uygulamadan yeni şifrenle giriş yap.";
+          return;
+        }
+        msg.textContent = (result.body && result.body.error) || "Şifre yenilenemedi.";
+        button.disabled = false;
+      }).catch(function () {
+        msg.textContent = "Bağlantı yok. Tekrar dene.";
+        button.disabled = false;
+      });
+    });
+  </script>
+</body>
+</html>

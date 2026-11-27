@@ -1,5 +1,4 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     { "source": "/kayit", "destination": "/waitlist/", "permanent": false },
     { "source": "/kayit/", "destination": "/waitlist/", "permanent": false },

@@ -1,0 +1,1 @@
+15 3 * * * root /usr/local/sbin/piaroute-backup.sh >> /var/log/piaroute-backup.log 2>&1

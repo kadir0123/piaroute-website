@@ -171,8 +171,7 @@ module.exports = async function handler(req, res) {
     if (device !== "android" && device !== "ios") device = "android";
     const play_email_same = !!body.play_email_same;
     const feedback_interview = !!body.feedback_interview;
-    const product_updates =
-      body.product_updates === undefined ? true : !!body.product_updates;
+    const product_updates = body.product_updates === true;
     const privacy_ok = !!body.privacy_ok;
     const turnstile_token = String(body.turnstile_token || "");
 

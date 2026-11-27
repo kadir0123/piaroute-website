@@ -1,0 +1,108 @@
+server {
+    server_name piaroute.com www.piaroute.com;
+    root /var/www/html;
+    index index.html;
+
+
+    location /photos/ {
+        alias /var/lib/piaroute/photos/;
+    }
+
+    location /osrm-car/ {
+        limit_req zone=piaroute_route burst=20 nodelay;
+        proxy_pass http://10.77.0.3:8080/osrm-car/;
+        proxy_set_header Authorization "";
+        proxy_set_header Cookie "";
+        proxy_set_header X-Forwarded-For "";
+        proxy_set_header X-Real-IP "";
+    }
+
+    location /osrm-bike/ {
+        limit_req zone=piaroute_route burst=20 nodelay;
+        proxy_pass http://10.77.0.3:8080/osrm-bike/;
+        proxy_set_header Authorization "";
+        proxy_set_header Cookie "";
+        proxy_set_header X-Forwarded-For "";
+        proxy_set_header X-Real-IP "";
+    }
+
+    location /osrm-foot/ {
+        limit_req zone=piaroute_route burst=20 nodelay;
+        proxy_pass http://10.77.0.3:8080/osrm-foot/;
+        proxy_set_header Authorization "";
+        proxy_set_header Cookie "";
+        proxy_set_header X-Forwarded-For "";
+        proxy_set_header X-Real-IP "";
+    }
+
+    location /nominatim/ {
+        limit_req zone=piaroute_search burst=12 nodelay;
+        proxy_pass http://10.77.0.3:8080/nominatim/;
+        proxy_set_header Authorization "";
+        proxy_set_header Cookie "";
+        proxy_set_header X-Forwarded-For "";
+        proxy_set_header X-Real-IP "";
+    }
+
+    location /overpass/ {
+        limit_req zone=piaroute_overpass burst=8 nodelay;
+        proxy_pass http://10.77.0.3:8080/overpass/;
+        proxy_set_header Authorization "";
+        proxy_set_header Cookie "";
+        proxy_set_header X-Forwarded-For "";
+        proxy_set_header X-Real-IP "";
+        proxy_read_timeout 25s;
+    }
+
+    location /tile/ {
+        limit_req zone=piaroute_tile burst=200 nodelay;
+        proxy_pass http://10.77.0.2/tile/;
+        proxy_set_header Authorization "";
+        proxy_set_header Cookie "";
+        proxy_set_header X-Forwarded-For "";
+        proxy_set_header X-Real-IP "";
+        proxy_set_header Host 83.119.129.42;
+    }
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/piaroute.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/piaroute.com/privkey.pem; # managed by Certbot
+    add_header Strict-Transport-Security "max-age=31536000" always;
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+}
+server {
+    if ($host = www.piaroute.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = piaroute.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name piaroute.com www.piaroute.com;
+    return 404; # managed by Certbot
+
+
+
+
+}
